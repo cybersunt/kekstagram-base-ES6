@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Максимова](https://up.htmlacademy.ru/javascript/19/user/367171).
-* Наставник: `Неизвестно`.
+* Наставник: [Юлия Максимова](https://up.htmlacademy.ru/javascript/19/user/367171).
 
 ---
 
