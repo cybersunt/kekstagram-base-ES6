@@ -93,36 +93,30 @@ const renderPicturesList = (arrayPictures) => {
 renderPicturesList(dataMocks);
 
 // utils.js
-var addClassName = function (element, className) {
-  element.classList.add(className);
-};
+const addClassName = (element, className) => element.classList.add(className);
 
-var removeClassName = function (element, className) {
-  element.classList.remove(className);
-};
+const removeClassName = (element, className) => element.classList.remove(className);
 
-var removeChilds = function (element) {
-  element.innerHTML = ``;
-};
+const removeChilds = (element) => element.innerHTML = ``;
 
-var createDOMElement = function (tagName, className) {
-  var element = document.createElement(tagName);
+const createDOMElement = (tagName, className) => {
+  const element = document.createElement(tagName);
   element.classList.add(className);
 
   return element;
 };
 
 // preview.js
-var galleryOverlay = document.querySelector(`body`);
-var bigPicture = document.querySelector(`.big-picture`);
-var usersMessages = bigPicture.querySelector(`.social__comments`);
-var messagesCounter = bigPicture.querySelector(`.social__comment-count`);
-var messagesLoader = bigPicture.querySelector(`.comments-loader`);
+const galleryOverlay = document.querySelector(`body`);
+const bigPicture = document.querySelector(`.big-picture`);
+const usersMessages = bigPicture.querySelector(`.social__comments`);
+const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
+const messagesLoader = bigPicture.querySelector(`.comments-loader`);
 
-var createMessage = function (comment) {
-  var userMessage = createDOMElement(`li`, `social__comment`);
-  var userMessageText = createDOMElement(`p`, `social__text`);
-  var userMessagePicture = createDOMElement(`img`, `social__picture`);
+const createMessage = function (comment) {
+  const userMessage = createDOMElement(`li`, `social__comment`);
+  const userMessageText = createDOMElement(`p`, `social__text`);
+  const userMessagePicture = createDOMElement(`img`, `social__picture`);
 
   userMessageText.textContent = comment.message;
 
@@ -137,20 +131,20 @@ var createMessage = function (comment) {
   return userMessage;
 };
 
-var renderMessagesList = function (array) {
+const renderMessagesList = function (array) {
   removeChilds(usersMessages);
-  var fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
   array.forEach(function (el) {
     fragment.appendChild(createMessage(el));
   });
   usersMessages.appendChild(fragment);
 };
 
-var renderPreviewPicture = function (arrayPictures, pictureIndex) {
-  var pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
-  var pictureLikes = bigPicture.querySelector(`.likes-count`);
-  var pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
-  var pictureDescription = bigPicture.querySelector(`.social__caption`);
+const renderPreviewPicture = function (arrayPictures, pictureIndex) {
+  const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
+  const pictureLikes = bigPicture.querySelector(`.likes-count`);
+  const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
+  const pictureDescription = bigPicture.querySelector(`.social__caption`);
 
   pictureUrl.src = arrayPictures[pictureIndex].url;
   pictureLikes.textContent = arrayPictures[pictureIndex].likes;
@@ -158,7 +152,7 @@ var renderPreviewPicture = function (arrayPictures, pictureIndex) {
   pictureDescription.textContent = arrayPictures[pictureIndex].description;
 }
 
-var openBigPicture = function (arrayPictures, pictureIndex) {
+const openBigPicture = function (arrayPictures, pictureIndex) {
   renderPreviewPicture(arrayPictures, pictureIndex);
   renderMessagesList(arrayPictures[pictureIndex].comments);
 
