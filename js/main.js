@@ -24,7 +24,7 @@ const DataPictures = {
 
 const generateSrcImage = () => {
   const numberImage = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM);
-  return `img/avatar-` + numberImage + `.svg`;
+  return `img/avatar-${numberImage}.svg`;
 };
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -57,7 +57,7 @@ const generateMocksData = ()=> {
 
   for (let i = 1; i < DataPictures.COUNT_PHOTOS + 1; i++) {
     notes.push({
-      url: `photos/` + i + `.jpg`,
+      url: `photos/${i}.jpg`,
       likes: getRandomNumber(DataPictures.MIN_LIKES, DataPictures.MAX_LIKES),
       comments: generateMessages(),
       description: getRandomElement(DataPictures.MESSAGES)
