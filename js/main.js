@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 // data.js
 const DataPictures = {
@@ -97,7 +97,9 @@ const addClassName = (element, className) => element.classList.add(className);
 
 const removeClassName = (element, className) => element.classList.remove(className);
 
-const removeChilds = (element) => element.innerHTML = ``;
+const removeChilds = (element) => {
+  element.innerHTML = ``;
+};
 
 const createDOMElement = (tagName, className) => {
   const element = document.createElement(tagName);
@@ -113,7 +115,7 @@ const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
 
-const createMessage = function (comment) {
+const createMessage = (comment) => {
   const userMessage = createDOMElement(`li`, `social__comment`);
   const userMessageText = createDOMElement(`p`, `social__text`);
   const userMessagePicture = createDOMElement(`img`, `social__picture`);
@@ -131,7 +133,7 @@ const createMessage = function (comment) {
   return userMessage;
 };
 
-const renderMessagesList = function (array) {
+const renderMessagesList = (array) => {
   removeChilds(usersMessages);
   const fragment = document.createDocumentFragment();
   array.forEach(function (el) {
@@ -140,7 +142,7 @@ const renderMessagesList = function (array) {
   usersMessages.appendChild(fragment);
 };
 
-const renderPreviewPicture = function (arrayPictures, pictureIndex) {
+const renderPreviewPicture = (arrayPictures, pictureIndex) => {
   const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
   const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
@@ -150,9 +152,9 @@ const renderPreviewPicture = function (arrayPictures, pictureIndex) {
   pictureLikes.textContent = arrayPictures[pictureIndex].likes;
   pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
   pictureDescription.textContent = arrayPictures[pictureIndex].description;
-}
+};
 
-const openBigPicture = function (arrayPictures, pictureIndex) {
+const openBigPicture = (arrayPictures, pictureIndex) => {
   renderPreviewPicture(arrayPictures, pictureIndex);
   renderMessagesList(arrayPictures[pictureIndex].comments);
 
