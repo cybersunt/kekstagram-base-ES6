@@ -149,7 +149,7 @@ var renderMessagesList = function (array) {
   usersMessages.appendChild(fragment);
 };
 
-function renderPreviewPicture(arrayPictures, pictureIndex) {
+var renderPreviewPicture = function (arrayPictures, pictureIndex) {
   var pictureUrl = bigPicture.querySelector('.big-picture__img img');
   var pictureLikes = bigPicture.querySelector('.likes-count');
   var pictureMessagesCounter = bigPicture.querySelector('.comments-count');
