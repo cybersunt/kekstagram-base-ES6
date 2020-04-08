@@ -85,9 +85,7 @@ const renderPicturesList = (arrayPictures) => {
   const picturesList = document.querySelector(`.pictures`);
   const fragment = document.createDocumentFragment();
 
-  arrayPictures.forEach(function (el) {
-    fragment.appendChild(renderPicture(el));
-  });
+  arrayPictures.forEach((el) => fragment.appendChild(renderPicture(el)));
 
   picturesList.appendChild(fragment);
 };
@@ -95,80 +93,80 @@ const renderPicturesList = (arrayPictures) => {
 renderPicturesList(dataMocks);
 
 // utils.js
-// var addClassName = function (element, className) {
-//   element.classList.add(className);
-// };
-//
-// var removeClassName = function (element, className) {
-//   element.classList.remove(className);
-// };
-//
-// var removeChilds = function (element) {
-//   element.innerHTML = ``;
-// };
-//
-// var createDOMElement = function (tagName, className) {
-//   var element = document.createElement(tagName);
-//   element.classList.add(className);
-//
-//   return element;
-// };
+var addClassName = function (element, className) {
+  element.classList.add(className);
+};
+
+var removeClassName = function (element, className) {
+  element.classList.remove(className);
+};
+
+var removeChilds = function (element) {
+  element.innerHTML = ``;
+};
+
+var createDOMElement = function (tagName, className) {
+  var element = document.createElement(tagName);
+  element.classList.add(className);
+
+  return element;
+};
 
 // preview.js
-// var galleryOverlay = document.querySelector(`body`);
-// var bigPicture = document.querySelector(`.big-picture`);
-// var usersMessages = bigPicture.querySelector(`.social__comments`);
-// var messagesCounter = bigPicture.querySelector(`.social__comment-count`);
-// var messagesLoader = bigPicture.querySelector(`.comments-loader`);
-//
-// var createMessage = function (comment) {
-//   var userMessage = createDOMElement(`li`, `social__comment`);
-//   var userMessageText = createDOMElement(`p`, `social__text`);
-//   var userMessagePicture = createDOMElement(`img`, `social__picture`);
-//
-//   userMessageText.textContent = comment.message;
-//
-//   userMessagePicture.width = 35;
-//   userMessagePicture.height = 35;
-//   userMessagePicture.alt = `Аватар автора фотографии`;
-//   userMessagePicture.src = comment.avatar;
-//
-//   userMessage.appendChild(userMessagePicture);
-//   userMessage.appendChild(userMessageText);
-//
-//   return userMessage;
-// };
-//
-// var renderMessagesList = function (array) {
-//   removeChilds(usersMessages);
-//   var fragment = document.createDocumentFragment();
-//   array.forEach(function (el) {
-//     fragment.appendChild(createMessage(el));
-//   });
-//   usersMessages.appendChild(fragment);
-// };
-//
-// var renderPreviewPicture = function (arrayPictures, pictureIndex) {
-//   var pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
-//   var pictureLikes = bigPicture.querySelector(`.likes-count`);
-//   var pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
-//   var pictureDescription = bigPicture.querySelector(`.social__caption`);
-//
-//   pictureUrl.src = arrayPictures[pictureIndex].url;
-//   pictureLikes.textContent = arrayPictures[pictureIndex].likes;
-//   pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
-//   pictureDescription.textContent = arrayPictures[pictureIndex].description;
-// }
-//
-// var openBigPicture = function (arrayPictures, pictureIndex) {
-//   renderPreviewPicture(arrayPictures, pictureIndex);
-//   renderMessagesList(arrayPictures[pictureIndex].comments);
-//
-//   addClassName(messagesCounter, `hidden`);
-//   addClassName(messagesLoader, `hidden`);
-//
-//   addClassName(galleryOverlay, `modal-open`);
-//   removeClassName(bigPicture, `hidden`);
-// };
-//
-// openBigPicture(dataMocks, 0);
+var galleryOverlay = document.querySelector(`body`);
+var bigPicture = document.querySelector(`.big-picture`);
+var usersMessages = bigPicture.querySelector(`.social__comments`);
+var messagesCounter = bigPicture.querySelector(`.social__comment-count`);
+var messagesLoader = bigPicture.querySelector(`.comments-loader`);
+
+var createMessage = function (comment) {
+  var userMessage = createDOMElement(`li`, `social__comment`);
+  var userMessageText = createDOMElement(`p`, `social__text`);
+  var userMessagePicture = createDOMElement(`img`, `social__picture`);
+
+  userMessageText.textContent = comment.message;
+
+  userMessagePicture.width = 35;
+  userMessagePicture.height = 35;
+  userMessagePicture.alt = `Аватар автора фотографии`;
+  userMessagePicture.src = comment.avatar;
+
+  userMessage.appendChild(userMessagePicture);
+  userMessage.appendChild(userMessageText);
+
+  return userMessage;
+};
+
+var renderMessagesList = function (array) {
+  removeChilds(usersMessages);
+  var fragment = document.createDocumentFragment();
+  array.forEach(function (el) {
+    fragment.appendChild(createMessage(el));
+  });
+  usersMessages.appendChild(fragment);
+};
+
+var renderPreviewPicture = function (arrayPictures, pictureIndex) {
+  var pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
+  var pictureLikes = bigPicture.querySelector(`.likes-count`);
+  var pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
+  var pictureDescription = bigPicture.querySelector(`.social__caption`);
+
+  pictureUrl.src = arrayPictures[pictureIndex].url;
+  pictureLikes.textContent = arrayPictures[pictureIndex].likes;
+  pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
+  pictureDescription.textContent = arrayPictures[pictureIndex].description;
+}
+
+var openBigPicture = function (arrayPictures, pictureIndex) {
+  renderPreviewPicture(arrayPictures, pictureIndex);
+  renderMessagesList(arrayPictures[pictureIndex].comments);
+
+  addClassName(messagesCounter, `hidden`);
+  addClassName(messagesLoader, `hidden`);
+
+  addClassName(galleryOverlay, `modal-open`);
+  removeClassName(bigPicture, `hidden`);
+};
+
+openBigPicture(dataMocks, 0);
