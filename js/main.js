@@ -102,7 +102,7 @@ var removeClassName = function (element, className) {
 };
 
 var removeChilds = function (element) {
-  element.innerHTML = ``;
+  element.innerHTML = '';
 };
 
 var createDOMElement = function (tagName, className) {
@@ -113,22 +113,22 @@ var createDOMElement = function (tagName, className) {
 };
 
 // preview.js
-var galleryOverlay = document.querySelector(`body`);
-var bigPicture = document.querySelector(`.big-picture`);
-var usersMessages = bigPicture.querySelector(`.social__comments`);
-var messagesCounter = bigPicture.querySelector(`.social__comment-count`);
-var messagesLoader = bigPicture.querySelector(`.comments-loader`);
+var galleryOverlay = document.querySelector('body');
+var bigPicture = document.querySelector('.big-picture');
+var usersMessages = bigPicture.querySelector('.social__comments');
+var messagesCounter = bigPicture.querySelector('.social__comment-count');
+var messagesLoader = bigPicture.querySelector('.comments-loader');
 
 var createMessage = function (comment) {
-  var userMessage = createDOMElement(`li`, `social__comment`);
-  var userMessageText = createDOMElement(`p`, `social__text`);
-  var userMessagePicture = createDOMElement(`img`, `social__picture`);
+  var userMessage = createDOMElement('li', 'social__comment');
+  var userMessageText = createDOMElement('p', 'social__text');
+  var userMessagePicture = createDOMElement('img', 'social__picture');
 
   userMessageText.textContent = comment.message;
 
   userMessagePicture.width = 35;
   userMessagePicture.height = 35;
-  userMessagePicture.alt = `Аватар автора фотографии`;
+  userMessagePicture.alt = 'Аватар автора фотографии';
   userMessagePicture.src = comment.avatar;
 
   userMessage.appendChild(userMessagePicture);
@@ -147,10 +147,10 @@ var renderMessagesList = function (array) {
 };
 
 var renderPreviewPicture = function (arrayPictures, pictureIndex) {
-  var pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
-  var pictureLikes = bigPicture.querySelector(`.likes-count`);
-  var pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
-  var pictureDescription = bigPicture.querySelector(`.social__caption`);
+  var pictureUrl = bigPicture.querySelector('.big-picture__img img');
+  var pictureLikes = bigPicture.querySelector('.likes-count');
+  var pictureMessagesCounter = bigPicture.querySelector('.comments-count');
+  var pictureDescription = bigPicture.querySelector('.social__caption');
 
   pictureUrl.src = arrayPictures[pictureIndex].url;
   pictureLikes.textContent = arrayPictures[pictureIndex].likes;
@@ -162,11 +162,11 @@ var openBigPicture = function (arrayPictures, pictureIndex) {
   renderPreviewPicture(arrayPictures, pictureIndex);
   renderMessagesList(arrayPictures[pictureIndex].comments);
 
-  addClassName(messagesCounter, `hidden`);
-  addClassName(messagesLoader, `hidden`);
+  addClassName(messagesCounter, 'hidden');
+  addClassName(messagesLoader, 'hidden');
 
-  addClassName(galleryOverlay, `modal-open`);
-  removeClassName(bigPicture, `hidden`);
+  addClassName(galleryOverlay, 'modal-open');
+  removeClassName(bigPicture, 'hidden');
 };
 
 openBigPicture(dataMocks, 0);
