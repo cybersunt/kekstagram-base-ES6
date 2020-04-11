@@ -1,5 +1,21 @@
 'use strict';
 
+// utils.js
+const addClassName = (element, className) => element.classList.add(className);
+
+const removeClassName = (element, className) => element.classList.remove(className);
+
+const removeChilds = (element) => {
+  element.innerHTML = ``;
+};
+
+const createDOMElement = (tagName, className) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+
+  return element;
+};
+
 // data.js
 const DataPictures = {
   COUNT_PHOTOS: 25,
@@ -69,14 +85,23 @@ const generateMocksData = ()=> {
 
 const dataMocks = generateMocksData();
 
+// variables
+const galleryOverlay = document.querySelector(`body`);
+var pictures = document.querySelector('.pictures');
+const bigPicture = document.querySelector(`.big-picture`);
+const usersMessages = bigPicture.querySelector(`.social__comments`);
+const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
+const messagesLoader = bigPicture.querySelector(`.comments-loader`);
+
 // gallery.js
-const renderPicture = (image) =>{
+const renderPicture = (image, pictureIndex) =>{
   const picturesTemplate = document.querySelector(`#picture`).content;
   const picturesElement = picturesTemplate.cloneNode(true);
 
   picturesElement.querySelector(`.picture__img`).src = image.url;
   picturesElement.querySelector(`.picture__likes`).textContent = image.likes;
   picturesElement.querySelector(`.picture__comments`).textContent = image.comments.length;
+  picturesElement.querySelector('.picture img').setAttribute('data-id', pictureIndex);
 
   return picturesElement;
 };
@@ -85,36 +110,30 @@ const renderPicturesList = (arrayPictures) => {
   const picturesList = document.querySelector(`.pictures`);
   const fragment = document.createDocumentFragment();
 
-  arrayPictures.forEach((el) => fragment.appendChild(renderPicture(el)));
+  arrayPictures.forEach((el, index) => fragment.appendChild(renderPicture(el, index)));
+
+  pictures.addEventListener('click', function (evt) {
+    if (evt.target.classList.contains('picture__img')) {
+      var pictureNumber = evt.target.dataset.id;
+      openBigPicture(arrayPictures, pictureNumber);
+    }
+  });
+
+  pictures.addEventListener('keydown', function (evt) {
+    if (evt.target.classList.contains('picture')) {
+      var pictureNumber = evt.target.querySelector('img').dataset.id;
+      openBigPicture(arrayPictures, pictureNumber);
+    }
+  });
 
   picturesList.appendChild(fragment);
 };
 
 renderPicturesList(dataMocks);
 
-// utils.js
-const addClassName = (element, className) => element.classList.add(className);
 
-const removeClassName = (element, className) => element.classList.remove(className);
-
-const removeChilds = (element) => {
-  element.innerHTML = ``;
-};
-
-const createDOMElement = (tagName, className) => {
-  const element = document.createElement(tagName);
-  element.classList.add(className);
-
-  return element;
-};
 
 // preview.js
-const galleryOverlay = document.querySelector(`body`);
-const bigPicture = document.querySelector(`.big-picture`);
-const usersMessages = bigPicture.querySelector(`.social__comments`);
-const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
-const messagesLoader = bigPicture.querySelector(`.comments-loader`);
-
 const createMessage = (comment) => {
   const userMessage = createDOMElement(`li`, `social__comment`);
   const userMessageText = createDOMElement(`p`, `social__text`);
@@ -147,7 +166,6 @@ const renderPreviewPicture = (arrayPictures, pictureIndex) => {
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
   const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
   const pictureDescription = bigPicture.querySelector(`.social__caption`);
-
   pictureUrl.src = arrayPictures[pictureIndex].url;
   pictureLikes.textContent = arrayPictures[pictureIndex].likes;
   pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
@@ -165,4 +183,3 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
   removeClassName(bigPicture, `hidden`);
 };
 
-openBigPicture(dataMocks, 0);
