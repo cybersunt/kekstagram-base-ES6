@@ -210,3 +210,39 @@ var closeBigPicture = function () {
   document.removeEventListener('keydown', onPictureCloseKeyDown);
 };
 
+// editor.js
+var editingWindow = document.querySelector('.img-upload');
+var fileUploadButton = editingWindow.querySelector('.img-upload__input');
+var previewWindow = editingWindow.querySelector('.img-upload__overlay');
+
+var closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
+var submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
+
+var editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
+var editingWindowComment = editingWindow.querySelector('.text__description');
+
+var openEditingWindow = function () {
+  addClassName(galleryOverlay, 'modal-open');
+  removeClassName(previewWindow, 'hidden');
+
+  closePreviewWindowBtn.addEventListener('click', closeEditingWindow);
+  submitPhotoBtn.addEventListener('submit', closeEditingWindow);
+  document.addEventListener('keydown', onEditingWindowKeyDown);
+};
+
+var closeEditingWindow = function () {
+  addClassName(previewWindow, 'hidden');
+  removeClassName(galleryOverlay, 'modal-open');
+
+  closePreviewWindowBtn.removeEventListener('click', closeEditingWindow);
+  submitPhotoBtn.removeEventListener('submit', closeEditingWindow);
+  document.removeEventListener('keydown', onEditingWindowKeyDown);
+};
+
+var onEditingWindowKeyDown = function () {
+  if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
+    closeEditingWindow();
+  }
+};
+
+fileUploadButton.addEventListener('change', openEditingWindow);
