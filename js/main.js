@@ -1,5 +1,11 @@
 'use strict';
 
+// const
+var KEY_CODE = {
+  ENTER: 13,
+  ESC: 27
+};
+
 // utils.js
 const addClassName = (element, className) => element.classList.add(className);
 
@@ -92,6 +98,7 @@ const bigPicture = document.querySelector(`.big-picture`);
 const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
+var closeBigPictureBtn = bigPicture.querySelector('.big-picture__cancel');
 
 // gallery.js
 const renderPicture = (image, pictureIndex) =>{
@@ -181,5 +188,25 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
 
   addClassName(galleryOverlay, `modal-open`);
   removeClassName(bigPicture, `hidden`);
+
+  closeBigPictureBtn.addEventListener('click', onPictureCloseBtnClick);
+  document.addEventListener('keydown', onPictureCloseKeyDown);
+};
+
+var onPictureCloseBtnClick = function () {
+  closeBigPicture();
+};
+
+var onPictureCloseKeyDown = function (evt) {
+  if (evt.keyCode === KEY_CODE.ESC) {
+    closeBigPicture();
+  }
+};
+
+var closeBigPicture = function () {
+  removeClassName(galleryOverlay, 'modal-open');
+  addClassName(bigPicture, 'hidden');
+  closeBigPictureBtn.removeEventListener('click', onPictureCloseBtnClick);
+  document.removeEventListener('keydown', onPictureCloseKeyDown);
 };
 
