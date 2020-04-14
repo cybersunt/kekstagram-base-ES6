@@ -6,6 +6,8 @@ var KEY_CODE = {
   ESC: 27
 };
 
+var SCALE_PERCENTS = 100;
+
 // utils.js
 const addClassName = (element, className) => element.classList.add(className);
 
@@ -138,8 +140,6 @@ const renderPicturesList = (arrayPictures) => {
 
 renderPicturesList(dataMocks);
 
-
-
 // preview.js
 const createMessage = (comment) => {
   const userMessage = createDOMElement(`li`, `social__comment`);
@@ -220,10 +220,38 @@ var submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
 
 var editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
 var editingWindowComment = editingWindow.querySelector('.text__description');
+var filters = editingWindow.querySelector('.effects');
+
+var effectsLevel = editingWindow.querySelector('.effect-level');
+var editingForm = editingWindow.querySelector('.img-upload__form');
+var editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
+var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+
+var currentFilterValue = 1;
+var currentFilter = 'none';
+
+var resetFilters = function () {
+  editingWindowComment.value = '';
+  editingWindowHashtags.value = '';
+  editingWindowFilters.className = 'effects__preview--none';
+  editingWindowFilters.style = null;
+};
+
+var setFilter = function (evt) {
+  if (evt.target.checked) {
+    currentFilter = evt.target.value;
+    removeClassName(effectsLevel, 'hidden');
+    editingWindowFilters.className = 'effects__preview--' + currentFilter;
+  }
+}
 
 var openEditingWindow = function () {
+  resetFilters();
   addClassName(galleryOverlay, 'modal-open');
   removeClassName(previewWindow, 'hidden');
+  addClassName(effectsLevel, 'hidden');
+
+  filters.addEventListener('click', setFilter);
 
   closePreviewWindowBtn.addEventListener('click', closeEditingWindow);
   submitPhotoBtn.addEventListener('submit', closeEditingWindow);
@@ -233,6 +261,8 @@ var openEditingWindow = function () {
 var closeEditingWindow = function () {
   addClassName(previewWindow, 'hidden');
   removeClassName(galleryOverlay, 'modal-open');
+
+  filters.removeEventListener('click', setFilter);
 
   closePreviewWindowBtn.removeEventListener('click', closeEditingWindow);
   submitPhotoBtn.removeEventListener('submit', closeEditingWindow);
