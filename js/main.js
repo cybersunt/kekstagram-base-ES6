@@ -8,6 +8,10 @@ var KEY_CODE = {
 
 var SCALE_PERCENTS = 100;
 
+var DEFAULT_FILTER_VALUE = 1;
+var DEFAULT_EFFECT_LEVEL = '100%';
+var DEFAULT_FILTER_NAME = 'none';
+
 // utils.js
 const addClassName = (element, className) => element.classList.add(className);
 
@@ -218,17 +222,46 @@ var previewWindow = editingWindow.querySelector('.img-upload__overlay');
 var closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
 var submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
 
+var filters = editingWindow.querySelector('.effects');
+var effectsLevel = editingWindow.querySelector('.effect-level');
+var editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
+var toggleSlider = editingWindow.querySelector('.effect-level__pin');
+var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+
+var editingForm = editingWindow.querySelector('.img-upload__form');
 var editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
 var editingWindowComment = editingWindow.querySelector('.text__description');
-var filters = editingWindow.querySelector('.effects');
-
-var effectsLevel = editingWindow.querySelector('.effect-level');
-var editingForm = editingWindow.querySelector('.img-upload__form');
-var editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
 
 var currentFilterValue = 1;
 var currentFilter = 'none';
+
+var settingsEffects = {
+  chrome: {
+    NAME: 'chrome',
+    MIN: 0,
+    MAX: 1
+  },
+  sepia: {
+    NAME: 'sepia',
+    MIN: 0,
+    MAX: 1
+  },
+  marvin: {
+    NAME: 'marvin',
+    MIN: 0,
+    MAX: 100
+  },
+  phobos: {
+    NAME: 'phobos',
+    MIN: 0,
+    MAX: 3
+  },
+  heat: {
+    NAME: 'heat',
+    MIN: 1,
+    MAX: 3
+  }
+};
 
 var resetFilters = function () {
   editingWindowComment.value = '';
@@ -240,10 +273,47 @@ var resetFilters = function () {
 var setFilter = function (evt) {
   if (evt.target.checked) {
     currentFilter = evt.target.value;
-    removeClassName(effectsLevel, 'hidden');
     editingWindowFilters.className = 'effects__preview--' + currentFilter;
+    removeClassName(effectsLevel, 'hidden');
+    setFilterSaturation(DEFAULT_FILTER_VALUE);
   }
-}
+};
+
+var getCurrentFilterValue = function (filter, filterValue) {
+  return (filter.MAX - filter.MIN) * filterValue;
+};
+
+var setDefaultSettings = function () {
+  pictureZoomingValue.value = SCALE_PERCENTS + '%';
+  editingWindowFilters.removeAttribute('style');
+  addClassName(effectsLevel, 'hidden');
+};
+
+var setFilterSaturation = function (filterValue) {
+  checkUseFilter(currentFilter, filterValue);
+};
+
+var checkUseFilter = function (filterName, filterValue) {
+  switch (filterName) {
+    case settingsEffects.chrome.NAME:
+      editingWindowFilters.style.filter = 'grayscale(' + getCurrentFilterValue(settingsEffects.chrome, filterValue) + ')';
+      break;
+    case settingsEffects.sepia.NAME:
+      editingWindowFilters.style.filter = 'sepia(' + getCurrentFilterValue(settingsEffects.sepia, filterValue) + ')';
+      break;
+    case settingsEffects.marvin.NAME:
+      editingWindowFilters.style.filter = 'invert(' + getCurrentFilterValue(settingsEffects.marvin, filterValue) + '%)';
+      break;
+    case settingsEffects.phobos.NAME:
+      editingWindowFilters.style.filter = 'blur(' + getCurrentFilterValue(settingsEffects.phobos, filterValue) + 'px)';
+      break;
+    case settingsEffects.heat.NAME:
+      editingWindowFilters.style.filter = 'brightness(' + getCurrentFilterValue(settingsEffects.heat, filterValue) + ')';
+      break;
+    default:
+      setDefaultSettings();
+  }
+};
 
 var openEditingWindow = function () {
   resetFilters();
@@ -252,6 +322,7 @@ var openEditingWindow = function () {
   addClassName(effectsLevel, 'hidden');
 
   filters.addEventListener('click', setFilter);
+  toggleSlider.addEventListener('mouseup', setFilterSaturation);
 
   closePreviewWindowBtn.addEventListener('click', closeEditingWindow);
   submitPhotoBtn.addEventListener('submit', closeEditingWindow);
@@ -263,6 +334,7 @@ var closeEditingWindow = function () {
   removeClassName(galleryOverlay, 'modal-open');
 
   filters.removeEventListener('click', setFilter);
+  toggleSlider.removeEventListener('mouseup', setFilterSaturation);
 
   closePreviewWindowBtn.removeEventListener('click', closeEditingWindow);
   submitPhotoBtn.removeEventListener('submit', closeEditingWindow);
