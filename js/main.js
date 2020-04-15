@@ -8,7 +8,7 @@ var KEY_CODE = {
 
 var SCALE_PERCENTS = 100;
 
-var DEFAULT_FILTER_VALUE = 1;
+var DEFAULT_FILTER_VALUE = 0.2;
 var DEFAULT_EFFECT_LEVEL = '100%';
 var DEFAULT_FILTER_NAME = 'none';
 
@@ -114,7 +114,7 @@ const renderPicture = (image, pictureIndex) =>{
   picturesElement.querySelector(`.picture__img`).src = image.url;
   picturesElement.querySelector(`.picture__likes`).textContent = image.likes;
   picturesElement.querySelector(`.picture__comments`).textContent = image.comments.length;
-  picturesElement.querySelector('.picture img').setAttribute('data-id', pictureIndex);
+  picturesElement.querySelector('.picture img').dataset.id = pictureIndex;
 
   return picturesElement;
 };
@@ -285,7 +285,7 @@ var getCurrentFilterValue = function (filter, filterValue) {
 
 var setDefaultSettings = function () {
   pictureZoomingValue.value = SCALE_PERCENTS + '%';
-  editingWindowFilters.removeAttribute('style');
+  editingWindowFilters.style = false;
   addClassName(effectsLevel, 'hidden');
 };
 
@@ -315,14 +315,48 @@ var checkUseFilter = function (filterName, filterValue) {
   }
 };
 
+var currentZoomValue = 1;
+
+var enlargePictureBtn = editingWindow.querySelector('.scale__control--bigger');
+var reducePictureBtn = editingWindow.querySelector('.scale__control--smaller');
+var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+
+var zoomPicture = function (zoomValue) {
+  if (currentZoomValue < zoomValue && currentZoomValue >= window.constants.SCALE_MIN_ZOOM) {
+    currentZoomValue += window.constants.SCALE_STEP_RESIZE;
+  }
+  if (currentZoomValue > zoomValue && currentZoomValue <= window.constants.SCALE_MAX_ZOOM) {
+    currentZoomValue -= window.constants.SCALE_STEP_RESIZE;
+  }
+  return currentZoomValue;
+};
+
+var setScale = function (evt) {
+  var valueZoom;
+  if (evt.target.classList.contains('scale__control--smaller')) {
+    valueZoom = zoomPicture(window.constants.SCALE_MIN_ZOOM);
+  }
+
+  if (evt.target.classList.contains('scale__control--bigger')) {
+    valueZoom = zoomPicture(window.constants.SCALE_MAX_ZOOM);
+  }
+
+  pictureZoomingValue.value = valueZoom * window.constants.SCALE_PERCENTS + '%';
+  editingWindowFilters.style.transform = 'scale(' + valueZoom + ')';
+};
+
 var openEditingWindow = function () {
   resetFilters();
+  setDefaultSettings();
   addClassName(galleryOverlay, 'modal-open');
   removeClassName(previewWindow, 'hidden');
   addClassName(effectsLevel, 'hidden');
 
   filters.addEventListener('click', setFilter);
   toggleSlider.addEventListener('mouseup', setFilterSaturation);
+
+  enlargePictureBtn.addEventListener('click', setScale);
+  reducePictureBtn.addEventListener('click', setScale);
 
   closePreviewWindowBtn.addEventListener('click', closeEditingWindow);
   submitPhotoBtn.addEventListener('submit', closeEditingWindow);
@@ -335,6 +369,9 @@ var closeEditingWindow = function () {
 
   filters.removeEventListener('click', setFilter);
   toggleSlider.removeEventListener('mouseup', setFilterSaturation);
+
+  enlargePictureBtn.removeEventListener('click', setScale);
+  reducePictureBtn.removeEventListener('click', setScale);
 
   closePreviewWindowBtn.removeEventListener('click', closeEditingWindow);
   submitPhotoBtn.removeEventListener('submit', closeEditingWindow);
