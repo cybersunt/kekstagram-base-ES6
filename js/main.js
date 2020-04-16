@@ -12,13 +12,13 @@ const SCALE_MIN_ZOOM = 0.25;
 const SCALE_MAX_ZOOM = 1;
 
 const DEFAULT_FILTER_VALUE = 0.2;
-const DEFAULT_EFFECT_LEVEL = '100%';
-const DEFAULT_FILTER_NAME = 'none';
+// const DEFAULT_EFFECT_LEVEL = `100%`;
+// const DEFAULT_FILTER_NAME = `none`;
 
-const INVALID_QUATITY_HASHTAGS = 'Вы можете добавить максимум 5 хэш-тегов';
-const INVALID_SIMILAR_HASHTAGS = 'Хэш-теги должны быть уникальными, невзирая на регистр';
-const INVALID_HASHTAG = 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел';
-const HASHTAGS_STATUS_OK = 'правильно';
+const INVALID_QUATITY_HASHTAGS = `Вы можете добавить максимум 5 хэш-тегов`;
+const INVALID_SIMILAR_HASHTAGS = `Хэш-теги должны быть уникальными, невзирая на регистр`;
+const INVALID_HASHTAG = `Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел`;
+const HASHTAGS_STATUS_OK = `правильно`;
 const MAX_COUNT_HASHTAGS = 5;
 
 // utils.js
@@ -108,12 +108,12 @@ const dataMocks = generateMocksData();
 
 // constiables
 const galleryOverlay = document.querySelector(`body`);
-const pictures = document.querySelector('.pictures');
+const pictures = document.querySelector(`.pictures`);
 const bigPicture = document.querySelector(`.big-picture`);
 const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
-const closeBigPictureBtn = bigPicture.querySelector('.big-picture__cancel');
+const closeBigPictureBtn = bigPicture.querySelector(`.big-picture__cancel`);
 
 // gallery.js
 const renderPicture = (image, pictureIndex) =>{
@@ -123,7 +123,7 @@ const renderPicture = (image, pictureIndex) =>{
   picturesElement.querySelector(`.picture__img`).src = image.url;
   picturesElement.querySelector(`.picture__likes`).textContent = image.likes;
   picturesElement.querySelector(`.picture__comments`).textContent = image.comments.length;
-  picturesElement.querySelector('.picture img').dataset.id = pictureIndex;
+  picturesElement.querySelector(`.picture img`).dataset.id = pictureIndex;
 
   return picturesElement;
 };
@@ -134,16 +134,16 @@ const renderPicturesList = (arrayPictures) => {
 
   arrayPictures.forEach((el, index) => fragment.appendChild(renderPicture(el, index)));
 
-  pictures.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('picture__img')) {
+  pictures.addEventListener(`click`, (evt) => {
+    if (evt.target.classList.contains(`picture__img`)) {
       const pictureNumber = evt.target.dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
     }
   });
 
-  pictures.addEventListener('keydown', (evt) => {
-    if (evt.target.classList.contains('picture')) {
-      const pictureNumber = evt.target.querySelector('img').dataset.id;
+  pictures.addEventListener(`keydown`, (evt) => {
+    if (evt.target.classList.contains(`picture`)) {
+      const pictureNumber = evt.target.querySelector(`img`).dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
     }
   });
@@ -202,8 +202,8 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
   addClassName(galleryOverlay, `modal-open`);
   removeClassName(bigPicture, `hidden`);
 
-  closeBigPictureBtn.addEventListener('click', onPictureCloseBtnClick);
-  document.addEventListener('keydown', onPictureCloseKeyDown);
+  closeBigPictureBtn.addEventListener(`click`, onPictureCloseBtnClick);
+  document.addEventListener(`keydown`, onPictureCloseKeyDown);
 };
 
 const onPictureCloseBtnClick = ()=> closeBigPicture();
@@ -215,73 +215,72 @@ const onPictureCloseKeyDown = (evt) => {
 };
 
 const closeBigPicture = ()=> {
-  removeClassName(galleryOverlay, 'modal-open');
-  addClassName(bigPicture, 'hidden');
-  closeBigPictureBtn.removeEventListener('click', onPictureCloseBtnClick);
-  document.removeEventListener('keydown', onPictureCloseKeyDown);
+  removeClassName(galleryOverlay, `modal-open`);
+  addClassName(bigPicture, `hidden`);
+  closeBigPictureBtn.removeEventListener(`click`, onPictureCloseBtnClick);
+  document.removeEventListener(`keydown`, onPictureCloseKeyDown);
 };
 
 // editor.js
-const editingWindow = document.querySelector('.img-upload');
-const fileUploadButton = editingWindow.querySelector('.img-upload__input');
-const previewWindow = editingWindow.querySelector('.img-upload__overlay');
+const editingWindow = document.querySelector(`.img-upload`);
+const fileUploadButton = editingWindow.querySelector(`.img-upload__input`);
+const previewWindow = editingWindow.querySelector(`.img-upload__overlay`);
 
-const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
-const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
+const closePreviewWindowBtn = editingWindow.querySelector(`.img-upload__cancel`);
+const submitPhotoBtn = editingWindow.querySelector(`.img-upload__submit`);
 
-const filters = editingWindow.querySelector('.effects');
-const effectsLevel = editingWindow.querySelector('.effect-level');
-const editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-const toggleSlider = editingWindow.querySelector('.effect-level__pin');
-const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+const filters = editingWindow.querySelector(`.effects`);
+const effectsLevel = editingWindow.querySelector(`.effect-level`);
+const editingWindowFilters = editingWindow.querySelector(`.img-upload__preview img`);
+const toggleSlider = editingWindow.querySelector(`.effect-level__pin`);
 
-// const editingForm = editingWindow.querySelector('.img-upload__form');
-const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
-const editingWindowComment = editingWindow.querySelector('.text__description');
+// const editingForm = editingWindow.querySelector(`.img-upload__form`);
+const editingWindowHashtags = editingWindow.querySelector(`.text__hashtags`);
+const editingWindowComment = editingWindow.querySelector(`.text__description`);
 
 // const currentFilterValue = 1;
-const currentFilter = 'none';
+const currentFilter = `none`;
 
 const settingsEffects = {
   chrome: {
-    NAME: 'chrome',
+    NAME: `chrome`,
     MIN: 0,
     MAX: 1
   },
   sepia: {
-    NAME: 'sepia',
+    NAME: `sepia`,
     MIN: 0,
     MAX: 1
   },
   marvin: {
-    NAME: 'marvin',
+    NAME: `marvin`,
     MIN: 0,
     MAX: 100
   },
   phobos: {
-    NAME: 'phobos',
+    NAME: `phobos`,
     MIN: 0,
     MAX: 3
   },
   heat: {
-    NAME: 'heat',
+    NAME: `heat`,
     MIN: 1,
     MAX: 3
   }
 };
 
 const resetFilters = () => {
-  editingWindowComment.value = '';
-  editingWindowHashtags.value = '';
-  editingWindowFilters.className = 'effects__preview--none';
+  editingWindowComment.value = ``;
+  editingWindowHashtags.value = ``;
+  editingWindowFilters.className = `effects__preview--none`;
   editingWindowFilters.style = null;
 };
 
 const setFilter = (evt) => {
   if (evt.target.checked) {
     currentFilter = evt.target.value;
-    editingWindowFilters.className = 'effects__preview--' + currentFilter;
-    removeClassName(effectsLevel, 'hidden');
+    editingWindowFilters.className = `effects__preview--` + currentFilter;
+    removeClassName(effectsLevel, `hidden`);
     setFilterSaturation(DEFAULT_FILTER_VALUE);
   }
 };
@@ -289,9 +288,9 @@ const setFilter = (evt) => {
 const getCurrentFilterValue = (filter, filterValue) => (filter.MAX - filter.MIN) * filterValue;
 
 const setDefaultSettings = () => {
-  pictureZoomingValue.value = SCALE_PERCENTS + '%';
+  pictureZoomingValue.value = SCALE_PERCENTS + `%`;
   editingWindowFilters.style = false;
-  addClassName(effectsLevel, 'hidden');
+  addClassName(effectsLevel, `hidden`);
 };
 
 const setFilterSaturation = (filterValue) => checkUseFilter(currentFilter, filterValue);
@@ -299,19 +298,19 @@ const setFilterSaturation = (filterValue) => checkUseFilter(currentFilter, filte
 const checkUseFilter = (filterName, filterValue) => {
   switch (filterName) {
     case settingsEffects.chrome.NAME:
-      editingWindowFilters.style.filter = 'grayscale(' + getCurrentFilterValue(settingsEffects.chrome, filterValue) + ')';
+      editingWindowFilters.style.filter = `grayscale(` + getCurrentFilterValue(settingsEffects.chrome, filterValue) + `)`;
       break;
     case settingsEffects.sepia.NAME:
-      editingWindowFilters.style.filter = 'sepia(' + getCurrentFilterValue(settingsEffects.sepia, filterValue) + ')';
+      editingWindowFilters.style.filter = `sepia(` + getCurrentFilterValue(settingsEffects.sepia, filterValue) + `)`;
       break;
     case settingsEffects.marvin.NAME:
-      editingWindowFilters.style.filter = 'invert(' + getCurrentFilterValue(settingsEffects.marvin, filterValue) + '%)';
+      editingWindowFilters.style.filter = `invert(` + getCurrentFilterValue(settingsEffects.marvin, filterValue) + `%)`;
       break;
     case settingsEffects.phobos.NAME:
-      editingWindowFilters.style.filter = 'blur(' + getCurrentFilterValue(settingsEffects.phobos, filterValue) + 'px)';
+      editingWindowFilters.style.filter = `blur(` + getCurrentFilterValue(settingsEffects.phobos, filterValue) + `px)`;
       break;
     case settingsEffects.heat.NAME:
-      editingWindowFilters.style.filter = 'brightness(' + getCurrentFilterValue(settingsEffects.heat, filterValue) + ')';
+      editingWindowFilters.style.filter = `brightness(` + getCurrentFilterValue(settingsEffects.heat, filterValue) + `)`;
       break;
     default:
       setDefaultSettings();
@@ -320,9 +319,9 @@ const checkUseFilter = (filterName, filterValue) => {
 
 const currentZoomValue = 1;
 
-const enlargePictureBtn = editingWindow.querySelector('.scale__control--bigger');
-const reducePictureBtn = editingWindow.querySelector('.scale__control--smaller');
-const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+const enlargePictureBtn = editingWindow.querySelector(`.scale__control--bigger`);
+const reducePictureBtn = editingWindow.querySelector(`.scale__control--smaller`);
+const pictureZoomingValue = editingWindow.querySelector(`.scale__control--value`);
 
 const zoomPicture = (zoomValue) => {
   if (currentZoomValue < zoomValue && currentZoomValue >= SCALE_MIN_ZOOM) {
@@ -335,17 +334,17 @@ const zoomPicture = (zoomValue) => {
 };
 
 const setScale = (evt) => {
-  const valueZoom;
-  if (evt.target.classList.contains('scale__control--smaller')) {
+  let valueZoom;
+  if (evt.target.classList.contains(`scale__control--smaller`)) {
     valueZoom = zoomPicture(SCALE_MIN_ZOOM);
   }
 
-  if (evt.target.classList.contains('scale__control--bigger')) {
+  if (evt.target.classList.contains(`scale__control--bigger`)) {
     valueZoom = zoomPicture(SCALE_MAX_ZOOM);
   }
 
-  pictureZoomingValue.value = valueZoom * SCALE_PERCENTS + '%';
-  editingWindowFilters.style.transform = 'scale(' + valueZoom + ')';
+  pictureZoomingValue.value = valueZoom * SCALE_PERCENTS + `%`;
+  editingWindowFilters.style.transform = `scale(` + valueZoom + `)`;
 };
 
 const checkHashtagsList = (evt) => {
@@ -364,21 +363,21 @@ const checkHashtagsList = (evt) => {
   // Проверяем правильно ли хэштэги написаны
   for (const i = 0; i < hashtags.length; i++) {
     if (!checkHashtag(hashtags[i])) {
-      return NVALID_HASHTAG;
+      return INVALID_HASHTAG;
     }
   }
   // если всё ок
   return HASHTAGS_STATUS_OK;
-}
+};
 
 const getArrayHashtags = (evt) => {
   const hashtagsString = removeExtraSpaces(evt.target.value).toLowerCase();
   return splitString(hashtagsString);
 };
 
-const splitString = (stringToSplit) => stringToSplit.split(' ');
+const splitString = (stringToSplit) => stringToSplit.split(` `);
 
-const removeExtraSpaces = (string) => string.replace(/\s+/g, ' ').trim();
+const removeExtraSpaces = (string) => string.replace(/\s+/g, ` `).trim();
 
 const checkQuantityHashtags = (array) => {
   if (array.length > MAX_COUNT_HASHTAGS) {
@@ -399,11 +398,11 @@ const checkHashtag = (hashtag) => {
 };
 
 const validate = ()=> {
-  editingWindowHashtags.addEventListener('input', function (evt) {
+  editingWindowHashtags.addEventListener(`input`, function (evt) {
     // сбрасываем статус
-    editingWindowHashtags.setCustomValidity('');
+    editingWindowHashtags.setCustomValidity(``);
 
-    if (evt.target.value !== '') {
+    if (evt.target.value !== ``) {
       // записываем результат валидации
       const validMessage = checkHashtagsList(evt);
 
@@ -419,40 +418,40 @@ const openEditingWindow = ()=> {
   // dom manipulation
   resetFilters();
   setDefaultSettings();
-  addClassName(galleryOverlay, 'modal-open');
-  removeClassName(previewWindow, 'hidden');
-  addClassName(effectsLevel, 'hidden');
+  addClassName(galleryOverlay, `modal-open`);
+  removeClassName(previewWindow, `hidden`);
+  addClassName(effectsLevel, `hidden`);
 
   validate();
 
   // event handlers
-  filters.addEventListener('click', setFilter);
-  toggleSlider.addEventListener('mouseup', setFilterSaturation);
+  filters.addEventListener(`click`, setFilter);
+  toggleSlider.addEventListener(`mouseup`, setFilterSaturation);
 
-  enlargePictureBtn.addEventListener('click', setScale);
-  reducePictureBtn.addEventListener('click', setScale);
+  enlargePictureBtn.addEventListener(`click`, setScale);
+  reducePictureBtn.addEventListener(`click`, setScale);
 
-  closePreviewWindowBtn.addEventListener('click', closeEditingWindow);
-  submitPhotoBtn.addEventListener('submit', closeEditingWindow);
-  document.addEventListener('keydown', onEditingWindowKeyDown);
+  closePreviewWindowBtn.addEventListener(`click`, closeEditingWindow);
+  submitPhotoBtn.addEventListener(`submit`, closeEditingWindow);
+  document.addEventListener(`keydown`, onEditingWindowKeyDown);
 };
 
 const closeEditingWindow = ()=> {
-  fileUploadButton.value = '';
+  fileUploadButton.value = ``;
   // dom manipulation
-  addClassName(previewWindow, 'hidden');
-  removeClassName(galleryOverlay, 'modal-open');
+  addClassName(previewWindow, `hidden`);
+  removeClassName(galleryOverlay, `modal-open`);
 
   // event handlers
-  filters.removeEventListener('click', setFilter);
-  toggleSlider.removeEventListener('mouseup', setFilterSaturation);
+  filters.removeEventListener(`click`, setFilter);
+  toggleSlider.removeEventListener(`mouseup`, setFilterSaturation);
 
-  enlargePictureBtn.removeEventListener('click', setScale);
-  reducePictureBtn.removeEventListener('click', setScale);
+  enlargePictureBtn.removeEventListener(`click`, setScale);
+  reducePictureBtn.removeEventListener(`click`, setScale);
 
-  closePreviewWindowBtn.removeEventListener('click', closeEditingWindow);
-  submitPhotoBtn.removeEventListener('submit', closeEditingWindow);
-  document.removeEventListener('keydown', onEditingWindowKeyDown);
+  closePreviewWindowBtn.removeEventListener(`click`, closeEditingWindow);
+  submitPhotoBtn.removeEventListener(`submit`, closeEditingWindow);
+  document.removeEventListener(`keydown`, onEditingWindowKeyDown);
 };
 
 const onEditingWindowKeyDown = ()=> {
@@ -461,4 +460,4 @@ const onEditingWindowKeyDown = ()=> {
   }
 };
 
-fileUploadButton.addEventListener('change', openEditingWindow);
+fileUploadButton.addEventListener(`change`, openEditingWindow);
