@@ -6,20 +6,20 @@ const KEY_CODE = {
   ESC: 27
 };
 
-var SCALE_PERCENTS = 100;
-var SCALE_STEP_RESIZE = 0.25;
-var SCALE_MIN_ZOOM = 0.25;
-var SCALE_MAX_ZOOM = 1;
+const SCALE_PERCENTS = 100;
+const SCALE_STEP_RESIZE = 0.25;
+const SCALE_MIN_ZOOM = 0.25;
+const SCALE_MAX_ZOOM = 1;
 
-var DEFAULT_FILTER_VALUE = 0.2;
-var DEFAULT_EFFECT_LEVEL = '100%';
-var DEFAULT_FILTER_NAME = 'none';
+const DEFAULT_FILTER_VALUE = 0.2;
+const DEFAULT_EFFECT_LEVEL = '100%';
+const DEFAULT_FILTER_NAME = 'none';
 
-var INVALID_QUATITY_HASHTAGS = 'Вы можете добавить максимум 5 хэш-тегов';
-var INVALID_SIMILAR_HASHTAGS = 'Хэш-теги должны быть уникальными, невзирая на регистр';
-var INVALID_HASHTAG = 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел';
-var HASHTAGS_STATUS_OK = 'правильно';
-var MAX_COUNT_HASHTAGS = 5;
+const INVALID_QUATITY_HASHTAGS = 'Вы можете добавить максимум 5 хэш-тегов';
+const INVALID_SIMILAR_HASHTAGS = 'Хэш-теги должны быть уникальными, невзирая на регистр';
+const INVALID_HASHTAG = 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел';
+const HASHTAGS_STATUS_OK = 'правильно';
+const MAX_COUNT_HASHTAGS = 5;
 
 // utils.js
 const addClassName = (element, className) => element.classList.add(className);
@@ -106,7 +106,7 @@ const generateMocksData = ()=> {
 
 const dataMocks = generateMocksData();
 
-// variables
+// constiables
 const galleryOverlay = document.querySelector(`body`);
 const pictures = document.querySelector('.pictures');
 const bigPicture = document.querySelector(`.big-picture`);
@@ -136,14 +136,14 @@ const renderPicturesList = (arrayPictures) => {
 
   pictures.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('picture__img')) {
-      var pictureNumber = evt.target.dataset.id;
+      const pictureNumber = evt.target.dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
     }
   });
 
   pictures.addEventListener('keydown', (evt) => {
     if (evt.target.classList.contains('picture')) {
-      var pictureNumber = evt.target.querySelector('img').dataset.id;
+      const pictureNumber = evt.target.querySelector('img').dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
     }
   });
@@ -229,20 +229,20 @@ const previewWindow = editingWindow.querySelector('.img-upload__overlay');
 const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
 const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
 
-var filters = editingWindow.querySelector('.effects');
-var effectsLevel = editingWindow.querySelector('.effect-level');
-var editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-var toggleSlider = editingWindow.querySelector('.effect-level__pin');
-var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+const filters = editingWindow.querySelector('.effects');
+const effectsLevel = editingWindow.querySelector('.effect-level');
+const editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
+const toggleSlider = editingWindow.querySelector('.effect-level__pin');
+const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
 
-// var editingForm = editingWindow.querySelector('.img-upload__form');
+// const editingForm = editingWindow.querySelector('.img-upload__form');
 const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
 const editingWindowComment = editingWindow.querySelector('.text__description');
 
-// var currentFilterValue = 1;
-var currentFilter = 'none';
+// const currentFilterValue = 1;
+const currentFilter = 'none';
 
-var settingsEffects = {
+const settingsEffects = {
   chrome: {
     NAME: 'chrome',
     MIN: 0,
@@ -270,14 +270,14 @@ var settingsEffects = {
   }
 };
 
-var resetFilters = function () {
+const resetFilters = () => {
   editingWindowComment.value = '';
   editingWindowHashtags.value = '';
   editingWindowFilters.className = 'effects__preview--none';
   editingWindowFilters.style = null;
 };
 
-var setFilter = function (evt) {
+const setFilter = (evt) => {
   if (evt.target.checked) {
     currentFilter = evt.target.value;
     editingWindowFilters.className = 'effects__preview--' + currentFilter;
@@ -286,21 +286,17 @@ var setFilter = function (evt) {
   }
 };
 
-var getCurrentFilterValue = function (filter, filterValue) {
-  return (filter.MAX - filter.MIN) * filterValue;
-};
+const getCurrentFilterValue = (filter, filterValue) => (filter.MAX - filter.MIN) * filterValue;
 
-var setDefaultSettings = function () {
+const setDefaultSettings = () => {
   pictureZoomingValue.value = SCALE_PERCENTS + '%';
   editingWindowFilters.style = false;
   addClassName(effectsLevel, 'hidden');
 };
 
-var setFilterSaturation = function (filterValue) {
-  checkUseFilter(currentFilter, filterValue);
-};
+const setFilterSaturation = (filterValue) => checkUseFilter(currentFilter, filterValue);
 
-var checkUseFilter = function (filterName, filterValue) {
+const checkUseFilter = (filterName, filterValue) => {
   switch (filterName) {
     case settingsEffects.chrome.NAME:
       editingWindowFilters.style.filter = 'grayscale(' + getCurrentFilterValue(settingsEffects.chrome, filterValue) + ')';
@@ -322,13 +318,13 @@ var checkUseFilter = function (filterName, filterValue) {
   }
 };
 
-var currentZoomValue = 1;
+const currentZoomValue = 1;
 
-var enlargePictureBtn = editingWindow.querySelector('.scale__control--bigger');
-var reducePictureBtn = editingWindow.querySelector('.scale__control--smaller');
-var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+const enlargePictureBtn = editingWindow.querySelector('.scale__control--bigger');
+const reducePictureBtn = editingWindow.querySelector('.scale__control--smaller');
+const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
 
-var zoomPicture = function (zoomValue) {
+const zoomPicture = (zoomValue) => {
   if (currentZoomValue < zoomValue && currentZoomValue >= SCALE_MIN_ZOOM) {
     currentZoomValue += SCALE_STEP_RESIZE;
   }
@@ -338,8 +334,8 @@ var zoomPicture = function (zoomValue) {
   return currentZoomValue;
 };
 
-var setScale = function (evt) {
-  var valueZoom;
+const setScale = (evt) => {
+  const valueZoom;
   if (evt.target.classList.contains('scale__control--smaller')) {
     valueZoom = zoomPicture(SCALE_MIN_ZOOM);
   }
@@ -352,8 +348,8 @@ var setScale = function (evt) {
   editingWindowFilters.style.transform = 'scale(' + valueZoom + ')';
 };
 
-var checkHashtagsList = function (evt) {
-  var hashtags = getArrayHashtags(evt);
+const checkHashtagsList = (evt) => {
+  const hashtags = getArrayHashtags(evt);
 
   // Проверяем количество хэштэгов
   if (!checkQuantityHashtags(hashtags)) {
@@ -366,7 +362,7 @@ var checkHashtagsList = function (evt) {
   }
 
   // Проверяем правильно ли хэштэги написаны
-  for (var i = 0; i < hashtags.length; i++) {
+  for (const i = 0; i < hashtags.length; i++) {
     if (!checkHashtag(hashtags[i])) {
       return NVALID_HASHTAG;
     }
@@ -375,45 +371,41 @@ var checkHashtagsList = function (evt) {
   return HASHTAGS_STATUS_OK;
 }
 
-var getArrayHashtags = function (evt) {
-  var hashtagsString = removeExtraSpaces(evt.target.value).toLowerCase();
+const getArrayHashtags = (evt) => {
+  const hashtagsString = removeExtraSpaces(evt.target.value).toLowerCase();
   return splitString(hashtagsString);
 };
 
-var splitString = function (stringToSplit) {
-  return stringToSplit.split(' ');
-};
+const splitString = (stringToSplit) => stringToSplit.split(' ');
 
-var removeExtraSpaces = function (string) {
-  return string.replace(/\s+/g, ' ').trim();
-};
+const removeExtraSpaces = (string) => string.replace(/\s+/g, ' ').trim();
 
-var checkQuantityHashtags = function (array) {
+const checkQuantityHashtags = (array) => {
   if (array.length > MAX_COUNT_HASHTAGS) {
     return false;
   }
   return true;
 };
 
-var searchSimilarHashtags = function (array) {
+const searchSimilarHashtags = (array) => {
   return !(array.some(function (element) {
     return array.indexOf(element) !== array.lastIndexOf(element);
   }));
 };
 
-var checkHashtag = function (hashtag) {
-  var reg = /#([A-Za-z0-9А-Яа-я]{2,19})$/;
+const checkHashtag = (hashtag) => {
+  const reg = /#([A-Za-z0-9А-Яа-я]{2,19})$/;
   return reg.test(hashtag);
 };
 
-var validate = function () {
+const validate = ()=> {
   editingWindowHashtags.addEventListener('input', function (evt) {
     // сбрасываем статус
     editingWindowHashtags.setCustomValidity('');
 
     if (evt.target.value !== '') {
       // записываем результат валидации
-      var validMessage = checkHashtagsList(evt);
+      const validMessage = checkHashtagsList(evt);
 
       if (validMessage !== HASHTAGS_STATUS_OK) {
         // Если не правильно - записываем статус
