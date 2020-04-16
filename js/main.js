@@ -7,10 +7,19 @@ var KEY_CODE = {
 };
 
 var SCALE_PERCENTS = 100;
+var SCALE_STEP_RESIZE = 0.25;
+var SCALE_MIN_ZOOM = 0.25;
+var SCALE_MAX_ZOOM = 1;
 
 var DEFAULT_FILTER_VALUE = 0.2;
 var DEFAULT_EFFECT_LEVEL = '100%';
 var DEFAULT_FILTER_NAME = 'none';
+
+var INVALID_QUATITY_HASHTAGS = 'Вы можете добавить максимум 5 хэш-тегов';
+var INVALID_SIMILAR_HASHTAGS = 'Хэш-теги должны быть уникальными, невзирая на регистр';
+var INVALID_HASHTAG = 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел';
+var HASHTAGS_STATUS_OK = 'правильно';
+var MAX_COUNT_HASHTAGS = 5;
 
 // utils.js
 const addClassName = (element, className) => element.classList.add(className);
@@ -322,11 +331,11 @@ var reducePictureBtn = editingWindow.querySelector('.scale__control--smaller');
 var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
 
 var zoomPicture = function (zoomValue) {
-  if (currentZoomValue < zoomValue && currentZoomValue >= window.constants.SCALE_MIN_ZOOM) {
-    currentZoomValue += window.constants.SCALE_STEP_RESIZE;
+  if (currentZoomValue < zoomValue && currentZoomValue >= SCALE_MIN_ZOOM) {
+    currentZoomValue += SCALE_STEP_RESIZE;
   }
-  if (currentZoomValue > zoomValue && currentZoomValue <= window.constants.SCALE_MAX_ZOOM) {
-    currentZoomValue -= window.constants.SCALE_STEP_RESIZE;
+  if (currentZoomValue > zoomValue && currentZoomValue <= SCALE_MAX_ZOOM) {
+    currentZoomValue -= SCALE_STEP_RESIZE;
   }
   return currentZoomValue;
 };
@@ -334,24 +343,99 @@ var zoomPicture = function (zoomValue) {
 var setScale = function (evt) {
   var valueZoom;
   if (evt.target.classList.contains('scale__control--smaller')) {
-    valueZoom = zoomPicture(window.constants.SCALE_MIN_ZOOM);
+    valueZoom = zoomPicture(SCALE_MIN_ZOOM);
   }
 
   if (evt.target.classList.contains('scale__control--bigger')) {
-    valueZoom = zoomPicture(window.constants.SCALE_MAX_ZOOM);
+    valueZoom = zoomPicture(SCALE_MAX_ZOOM);
   }
 
-  pictureZoomingValue.value = valueZoom * window.constants.SCALE_PERCENTS + '%';
+  pictureZoomingValue.value = valueZoom * SCALE_PERCENTS + '%';
   editingWindowFilters.style.transform = 'scale(' + valueZoom + ')';
 };
 
+var checkHashtagsList = function (evt) {
+  var hashtags = getArrayHashtags(evt);
+
+  // Проверяем количество хэштэгов
+  if (!checkQuantityHashtags(hashtags)) {
+    return INVALID_QUATITY_HASHTAGS;
+  }
+
+  // проверяем есть ли повторяющиеся хэштэги
+  if (!searchSimilarHashtags(hashtags)) {
+    return INVALID_SIMILAR_HASHTAGS;
+  }
+
+  // Проверяем правильно ли хэштэги написаны
+  for (var i = 0; i < hashtags.length; i++) {
+    if (!checkHashtag(hashtags[i])) {
+      return NVALID_HASHTAG;
+    }
+  }
+  // если всё ок
+  return HASHTAGS_STATUS_OK;
+}
+
+var getArrayHashtags = function (evt) {
+  var hashtagsString = removeExtraSpaces(evt.target.value).toLowerCase();
+  return splitString(hashtagsString);
+};
+
+var splitString = function (stringToSplit) {
+  return stringToSplit.split(' ');
+};
+
+var removeExtraSpaces = function (string) {
+  return string.replace(/\s+/g, ' ').trim();
+};
+
+var checkQuantityHashtags = function (array) {
+  if (array.length > MAX_COUNT_HASHTAGS) {
+    return false;
+  }
+  return true;
+};
+
+var searchSimilarHashtags = function (array) {
+  return !(array.some(function (element) {
+    return array.indexOf(element) !== array.lastIndexOf(element);
+  }));
+};
+
+var checkHashtag = function (hashtag) {
+  var reg = /#([A-Za-z0-9А-Яа-я]{2,19})$/;
+  return reg.test(hashtag);
+};
+
+var validate = function () {
+  editingWindowHashtags.addEventListener('input', function (evt) {
+    // сбрасываем статус
+    editingWindowHashtags.setCustomValidity('');
+
+    if (evt.target.value !== '') {
+      // записываем результат валидации
+      var validMessage = checkHashtagsList(evt);
+
+      if (validMessage !== HASHTAGS_STATUS_OK) {
+        // Если не правильно - записываем статус
+        editingWindowHashtags.setCustomValidity(validMessage);
+      }
+    }
+  });
+};
+
 var openEditingWindow = function () {
+  // dom manipulation
   resetFilters();
   setDefaultSettings();
   addClassName(galleryOverlay, 'modal-open');
   removeClassName(previewWindow, 'hidden');
   addClassName(effectsLevel, 'hidden');
 
+  validate();
+
+  // event handlers
   filters.addEventListener('click', setFilter);
   toggleSlider.addEventListener('mouseup', setFilterSaturation);
 
@@ -364,9 +448,11 @@ var openEditingWindow = function () {
 };
 
 var closeEditingWindow = function () {
+  // dom manipulation
   addClassName(previewWindow, 'hidden');
   removeClassName(galleryOverlay, 'modal-open');
 
+  // event handlers
   filters.removeEventListener('click', setFilter);
   toggleSlider.removeEventListener('mouseup', setFilterSaturation);
 
