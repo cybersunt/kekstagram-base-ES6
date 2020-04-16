@@ -1,7 +1,7 @@
 'use strict';
 
 // const
-var KEY_CODE = {
+const KEY_CODE = {
   ENTER: 13,
   ESC: 27
 };
@@ -108,12 +108,12 @@ const dataMocks = generateMocksData();
 
 // variables
 const galleryOverlay = document.querySelector(`body`);
-var pictures = document.querySelector('.pictures');
+const pictures = document.querySelector('.pictures');
 const bigPicture = document.querySelector(`.big-picture`);
 const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
-var closeBigPictureBtn = bigPicture.querySelector('.big-picture__cancel');
+const closeBigPictureBtn = bigPicture.querySelector('.big-picture__cancel');
 
 // gallery.js
 const renderPicture = (image, pictureIndex) =>{
@@ -134,14 +134,14 @@ const renderPicturesList = (arrayPictures) => {
 
   arrayPictures.forEach((el, index) => fragment.appendChild(renderPicture(el, index)));
 
-  pictures.addEventListener('click', function (evt) {
+  pictures.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('picture__img')) {
       var pictureNumber = evt.target.dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
     }
   });
 
-  pictures.addEventListener('keydown', function (evt) {
+  pictures.addEventListener('keydown', (evt) => {
     if (evt.target.classList.contains('picture')) {
       var pictureNumber = evt.target.querySelector('img').dataset.id;
       openBigPicture(arrayPictures, pictureNumber);
@@ -206,17 +206,15 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
   document.addEventListener('keydown', onPictureCloseKeyDown);
 };
 
-var onPictureCloseBtnClick = function () {
-  closeBigPicture();
-};
+const onPictureCloseBtnClick = ()=> closeBigPicture();
 
-var onPictureCloseKeyDown = function (evt) {
+const onPictureCloseKeyDown = (evt) => {
   if (evt.keyCode === KEY_CODE.ESC) {
     closeBigPicture();
   }
 };
 
-var closeBigPicture = function () {
+const closeBigPicture = ()=> {
   removeClassName(galleryOverlay, 'modal-open');
   addClassName(bigPicture, 'hidden');
   closeBigPictureBtn.removeEventListener('click', onPictureCloseBtnClick);
@@ -224,12 +222,12 @@ var closeBigPicture = function () {
 };
 
 // editor.js
-var editingWindow = document.querySelector('.img-upload');
-var fileUploadButton = editingWindow.querySelector('.img-upload__input');
-var previewWindow = editingWindow.querySelector('.img-upload__overlay');
+const editingWindow = document.querySelector('.img-upload');
+const fileUploadButton = editingWindow.querySelector('.img-upload__input');
+const previewWindow = editingWindow.querySelector('.img-upload__overlay');
 
-var closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
-var submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
+const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
+const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
 
 var filters = editingWindow.querySelector('.effects');
 var effectsLevel = editingWindow.querySelector('.effect-level');
@@ -237,11 +235,11 @@ var editingWindowFilters = editingWindow.querySelector('.img-upload__preview img
 var toggleSlider = editingWindow.querySelector('.effect-level__pin');
 var pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
 
-var editingForm = editingWindow.querySelector('.img-upload__form');
-var editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
-var editingWindowComment = editingWindow.querySelector('.text__description');
+// var editingForm = editingWindow.querySelector('.img-upload__form');
+const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
+const editingWindowComment = editingWindow.querySelector('.text__description');
 
-var currentFilterValue = 1;
+// var currentFilterValue = 1;
 var currentFilter = 'none';
 
 var settingsEffects = {
@@ -425,7 +423,7 @@ var validate = function () {
   });
 };
 
-var openEditingWindow = function () {
+const openEditingWindow = ()=> {
   // dom manipulation
   resetFilters();
   setDefaultSettings();
@@ -447,7 +445,8 @@ var openEditingWindow = function () {
   document.addEventListener('keydown', onEditingWindowKeyDown);
 };
 
-var closeEditingWindow = function () {
+const closeEditingWindow = ()=> {
+  fileUploadButton.value = '';
   // dom manipulation
   addClassName(previewWindow, 'hidden');
   removeClassName(galleryOverlay, 'modal-open');
@@ -464,7 +463,7 @@ var closeEditingWindow = function () {
   document.removeEventListener('keydown', onEditingWindowKeyDown);
 };
 
-var onEditingWindowKeyDown = function () {
+const onEditingWindowKeyDown = ()=> {
   if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
     closeEditingWindow();
   }
