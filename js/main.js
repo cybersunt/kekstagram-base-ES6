@@ -106,7 +106,7 @@ const generateMocksData = ()=> {
 
 const dataMocks = generateMocksData();
 
-// constiables
+// variables
 const galleryOverlay = document.querySelector(`body`);
 const pictures = document.querySelector(`.pictures`);
 const bigPicture = document.querySelector(`.big-picture`);
