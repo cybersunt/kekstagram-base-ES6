@@ -1,7 +1,16 @@
-root: true
+#root: true
+#
+#env:
+#  browser: true
+#
+#extends:
+#  "htmlacademy/es5"
 
 env:
+  es6: true
   browser: true
+  commonjs: true
 
-extends:
-  "htmlacademy/es5"
+extends: 'htmlacademy/es6'
+
+
