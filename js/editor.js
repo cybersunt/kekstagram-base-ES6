@@ -31,7 +31,7 @@
     window.utils.addClassName(effectsLevel, `hidden`);
 
     // event handlers
-    window.form.validate();
+    window.form.initValidation();
     window.filters.applyEffect();
     window.scale.addZoomPhoto();
 
@@ -47,6 +47,7 @@
     window.utils.removeClassName(galleryOverlay, `modal-open`);
 
     // event handlers
+    window.form.breakValidation();
     window.filters.cancelEffect();
     window.scale.removeZoomPhoto();
 
