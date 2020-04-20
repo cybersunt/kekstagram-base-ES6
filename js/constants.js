@@ -1,31 +1,29 @@
-'use strict';
+const KEYCODE_ENTER = 13;
+const KEYCODE_ESC = 27;
 
-(function () {
-  window.constants = {
-    KEYCODE_ENTER: 13,
-    KEYCODE_ESC: 27,
+const SCALE_STEP_RESIZE = 0.25;
+const SCALE_MIN_ZOOM = 0.25;
+const SCALE_MAX_ZOOM = 1;
+const SCALE_PERCENTS = 100;
 
-    SCALE_STEP_RESIZE: 0.25,
-    SCALE_MIN_ZOOM: 0.25,
-    SCALE_MAX_ZOOM: 1,
-    SCALE_PERCENTS: 100,
+const INVALID_QUATITY_HASHTAGS = 'Вы можете добавить максимум 5 хэш-тегов';
+const INVALID_SIMILAR_HASHTAGS = 'Хэш-теги должны быть уникальными; невзирая на регистр';
+const INVALID_HASHTAG = 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел';
+const HASHTAGS_STATUS_OK = 'правильно';
+const MAX_COUNT_HASHTAGS = 5;
 
-    INVALID_QUATITY_HASHTAGS: 'Вы можете добавить максимум 5 хэш-тегов',
-    INVALID_SIMILAR_HASHTAGS: 'Хэш-теги должны быть уникальными, невзирая на регистр',
-    INVALID_HASHTAG: 'Хэш-тэг должен начинаться с # и состоять только из букв и цифр. Между хэш-тегами должен быть пробел',
-    HASHTAGS_STATUS_OK: 'правильно',
-    MAX_COUNT_HASHTAGS: 5,
+const USER_AVATAR_SIZE = 35;
+const USER_AVATAR_ALT = 'Аватар автора фотографии';
 
-    USER_AVATAR_SIZE: 35,
-    USER_AVATAR_ALT: 'Аватар автора фотографии',
+const MAX_LENGTH_GALLERY = 10;
+const MIN_COMMENTS_COUNT = 5;
+const STEP_COMMENTS_COUNT = 5;
 
-    MAX_LENGTH_GALLERY: 10,
-    MIN_COMMENTS_COUNT: 5,
-    STEP_COMMENTS_COUNT: 5,
+const DEFAULT_FILTER_VALUE = 1;
+const DEFAULT_EFFECT_LEVEL = '100%';
 
-    DEFAULT_FILTER_VALUE: 1,
-    DEFAULT_EFFECT_LEVEL: '100%'
-  };
-})();
+export { KEYCODE_ENTER, KEYCODE_ESC, SCALE_STEP_RESIZE, SCALE_MIN_ZOOM, SCALE_MAX_ZOOM, SCALE_PERCENTS, INVALID_QUATITY_HASHTAGS,
+  INVALID_SIMILAR_HASHTAGS, INVALID_HASHTAG,  HASHTAGS_STATUS_OK, MAX_COUNT_HASHTAGS, USER_AVATAR_SIZE, USER_AVATAR_ALT, MAX_LENGTH_GALLERY,
+  MIN_COMMENTS_COUNT, STEP_COMMENTS_COUNT, DEFAULT_FILTER_VALUE, DEFAULT_EFFECT_LEVEL }
 
 

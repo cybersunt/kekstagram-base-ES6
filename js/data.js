@@ -1,7 +1,4 @@
-'use strict';
-
-(function () {
-  const DataPictures = {
+const DataPictures = {
     COUNT_PHOTOS: 25,
 
     MIN_LIKES: 15,
@@ -22,52 +19,46 @@
     USER_NAMES: [`Артем`, `Игорь`, `Марина`, `Динара`, `Вадим`, `Сергей`]
   };
 
-  const generateSrcImage = () => {
+const generateSrcImage = () => {
     const numberImage = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM);
     return `img/avatar-${numberImage}.svg`;
   };
 
-  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+const getRandomElement = (array) => {
+  const randomIndex = getRandomNumber(1, array.length - 1);
+  const randomElement = array[randomIndex];
+  return randomElement;
+};
 
-  const getRandomElement = (array) => {
-    const randomIndex = getRandomNumber(1, array.length - 1);
-    const randomElement = array[randomIndex];
-    return randomElement;
-  };
+const generateMessages = () => {
+  const messages = [];
 
-  const generateMessages = () => {
-    const messages = [];
+  const countComments = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM - 1);
 
-    const countComments = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM - 1);
+  for (let i = 0; i < countComments; i++) {
+    messages.push({
+      avatar: generateSrcImage(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM),
+      name: getRandomElement(DataPictures.USER_NAMES),
+      message: getRandomElement(DataPictures.MESSAGES)
+    });
+  }
+  return messages;
+};
 
-    for (let i = 0; i < countComments; i++) {
-      messages.push({
-        avatar: generateSrcImage(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM),
-        name: getRandomElement(DataPictures.USER_NAMES),
-        message: getRandomElement(DataPictures.MESSAGES)
-      });
-    }
+const generateMocksData = () => {
+  const notes = [];
 
-    return messages;
-  };
+  for (let i = 1; i < DataPictures.COUNT_PHOTOS + 1; i++) {
+    notes.push({
+      url: `photos/${i}.jpg`,
+      likes: getRandomNumber(DataPictures.MIN_LIKES, DataPictures.MAX_LIKES),
+      comments: generateMessages(),
+      description: getRandomElement(DataPictures.MESSAGES)
+    });
+  }
+  return notes;
+}
 
-  const generateMocksData = ()=> {
-    const notes = [];
-
-    for (let i = 1; i < DataPictures.COUNT_PHOTOS + 1; i++) {
-      notes.push({
-        url: `photos/${i}.jpg`,
-        likes: getRandomNumber(DataPictures.MIN_LIKES, DataPictures.MAX_LIKES),
-        comments: generateMessages(),
-        description: getRandomElement(DataPictures.MESSAGES)
-      });
-    }
-
-    return notes;
-  };
-
-  window.data = {
-    generateMocksData: generateMocksData
-  };
-})();
+export default generateMocksData;

@@ -1,72 +1,72 @@
-'use strict';
+import * as  constants from './constants.js';
+import * as utils from './utils.js';
+import * as form from './form.js';
+import * as filters from './filters.js';
+import * as scale from './scale.js';
 
-(function () {
-  const galleryOverlay = document.querySelector('body');
+const galleryOverlay = document.querySelector('body');
 
-  const editingWindow = document.querySelector('.img-upload');
-  const fileUploadButton = editingWindow.querySelector('.img-upload__input');
-  const previewWindow = editingWindow.querySelector('.img-upload__overlay');
-  const effectsLevel = editingWindow.querySelector('.effect-level');
-  const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
-  const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
-  const editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-  const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
-  const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
-  const editingWindowComment = editingWindow.querySelector('.text__description');
+const editingWindow = document.querySelector('.img-upload');
+const fileUploadButton = editingWindow.querySelector('.img-upload__input');
+const previewWindow = editingWindow.querySelector('.img-upload__overlay');
+const effectsLevel = editingWindow.querySelector('.effect-level');
+const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
+const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
+const editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
+const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
+const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
+const editingWindowComment = editingWindow.querySelector('.text__description');
 
-  const resetSettings = () => {
-    editingWindowComment.value = ``;
-    editingWindowHashtags.value = ``;
-    editingWindowFilters.style = null;
-    editingWindowFilters.className = `effects__preview--none`;
-    pictureZoomingValue.value = window.constants.SCALE_PERCENTS + `%`;
-    window.utils.addClassName(effectsLevel, `hidden`);
-  };
+const resetSettings = () => {
+  editingWindowComment.value = ``;
+  editingWindowHashtags.value = ``;
+  editingWindowFilters.style = null;
+  editingWindowFilters.className = `effects__preview--none`;
+  pictureZoomingValue.value = constants.SCALE_PERCENTS + `%`;
+  utils.addClassName(effectsLevel, `hidden`);
+};
 
-  const openEditingWindow = ()=> {
-    resetSettings();
-    // dom manipulation
-    window.utils.addClassName(galleryOverlay, `modal-open`);
-    window.utils.removeClassName(previewWindow, `hidden`);
-    window.utils.addClassName(effectsLevel, `hidden`);
+const openEditingWindow = ()=> {
+  resetSettings();
+  // dom manipulation
+  utils.addClassName(galleryOverlay, `modal-open`);
+  utils.removeClassName(previewWindow, `hidden`);
+  utils.addClassName(effectsLevel, `hidden`);
 
-    // event handlers
-    window.form.initValidation();
-    window.filters.applyEffect();
-    window.scale.addZoomPhoto();
+  // event handlers
+  form.initValidation();
+  filters.applyEffect();
+  scale.addZoomPhoto();
 
-    closePreviewWindowBtn.addEventListener(`click`, closeEditingWindow);
-    submitPhotoBtn.addEventListener(`submit`, closeEditingWindow);
-    document.addEventListener(`keydown`, onEditingWindowKeyDown);
-  };
+  closePreviewWindowBtn.addEventListener(`click`, closeEditingWindow);
+  submitPhotoBtn.addEventListener(`submit`, closeEditingWindow);
+  document.addEventListener(`keydown`, onEditingWindowKeyDown);
+};
 
-  const closeEditingWindow = ()=> {
-    // dom manipulation
-    fileUploadButton.value = ``;
-    window.utils.addClassName(previewWindow, `hidden`);
-    window.utils.removeClassName(galleryOverlay, `modal-open`);
+const closeEditingWindow = ()=> {
+  // dom manipulation
+  fileUploadButton.value = ``;
+  utils.addClassName(previewWindow, `hidden`);
+  utils.removeClassName(galleryOverlay, `modal-open`);
 
-    // event handlers
-    window.form.breakValidation();
-    window.filters.cancelEffect();
-    window.scale.removeZoomPhoto();
+  // event handlers
+  form.breakValidation();
+  filters.cancelEffect();
+  scale.removeZoomPhoto();
 
-    closePreviewWindowBtn.removeEventListener(`click`, closeEditingWindow);
-    submitPhotoBtn.removeEventListener(`submit`, closeEditingWindow);
-    document.removeEventListener(`keydown`, onEditingWindowKeyDown);
-  };
+  closePreviewWindowBtn.removeEventListener(`click`, closeEditingWindow);
+  submitPhotoBtn.removeEventListener(`submit`, closeEditingWindow);
+  document.removeEventListener(`keydown`, onEditingWindowKeyDown);
+};
 
-  const onEditingWindowKeyDown = ()=> {
-    if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
-      if (evt.keyCode === window.constants.KEYCODE_ESC) {
-        closeEditingWindow();
-      }
+const onEditingWindowKeyDown = ()=> {
+  if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
+    if (evt.keyCode === constants.KEYCODE_ESC) {
+      closeEditingWindow();
     }
-  };
+  }
+};
 
-  const uploadPhoto = () => fileUploadButton.addEventListener('change', openEditingWindow);
+const uploadPhoto = () => fileUploadButton.addEventListener('change', openEditingWindow);
 
-  window.editor = {
-    uploadPhoto: uploadPhoto
-  };
-})();
+export default uploadPhoto
