@@ -110,8 +110,8 @@ const onMouseDown = (evt) => {
       toggleSliderCoord = LimitMovementX.max;
     }
 
-    toggleSlider.style.left = toggleSliderCoord + 'px';
-    sliderBarFill.style.width = toggleSliderCoord + 'px';
+    toggleSlider.style.left = toggleSliderCoord + `px`;
+    sliderBarFill.style.width = toggleSliderCoord + `px`;
 
     currentFilterValue = toggleSliderCoord / (LimitMovementX.max - LimitMovementX.min);
     setFilterSaturation(currentFilterValue);
@@ -120,13 +120,13 @@ const onMouseDown = (evt) => {
   const onMouseUp = (upEvt) => {
     upEvt.preventDefault();
 
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  }
+    document.removeEventListener(`mousemove`, onMouseMove);
+    document.removeEventListener(`mouseup`, onMouseUp);
+  };
 
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
-}
+  document.addEventListener(`mousemove`, onMouseMove);
+  document.addEventListener(`mouseup`, onMouseUp);
+};
 
 const applyEffect = () => {
   filters.addEventListener(`click`, setFilter);
