@@ -1,7 +1,7 @@
-'use strict';
+import generateMocksData from './data.js';
+import renderPhotos from './gallery.js';
+import uploadPhoto from './editor.js';
 
-(function () {
-  const dataMocks = window.data.generateMocksData();
-  window.gallery.renderPhotos(dataMocks);
-  window.editor.uploadPhoto();
-})();
+const dataMocks = generateMocksData();
+renderPhotos(dataMocks);
+uploadPhoto();

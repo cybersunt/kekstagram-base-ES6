@@ -1,32 +1,38 @@
-'use strict';
+import * as constants from './constants.js';
 
-(function () {
-  window.utils = {
-    addClassName: (element, className) => element.classList.add(className),
-    removeClassName: (element, className) => element.classList.remove(className),
-    removeChilds: (element) => element.innerHTML = '',
-    createDOMElement: (tagName, className) => {
-      var element = document.createElement(tagName);
-      element.classList.add(className);
-      return element;
-    },
-    getTemplateClone: (template, innerSelector) => {
-      var templateElement = document.querySelector(template);
-      var elementToClone = templateElement.querySelector(innerSelector);
-      if ('content' in templateElement) {
-        elementToClone = templateElement.content.querySelector(innerSelector);
-      }
-      return elementToClone;
-    },
-    isEscEvent: (evt, action) => {
-      if (evt.keyCode === window.constants.KEYCODE_ESC) {
-        action();
-      }
-    },
-    isEnterEvent: (evt, action, array) => {
-      if (evt.keyCode === window.constants.KEYCODE_ENTER) {
-        action(array);
-      }
-    }
-  };
-})();
+const addClassName = (element, className) => element.classList.add(className);
+
+const removeClassName = (element, className) => element.classList.remove(className);
+
+const removeChilds = (element) => {
+  element.innerHTML = ``;
+};
+
+const createDOMElement = (tagName, className) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  return element;
+};
+
+const getTemplateClone = (template, innerSelector) => {
+  const templateElement = document.querySelector(template);
+  const elementToClone = templateElement.querySelector(innerSelector);
+  if (`content` in templateElement) {
+    elementToClone = templateElement.content.querySelector(innerSelector);
+  }
+  return elementToClone;
+};
+
+const isEscEvent = (evt, action) => {
+  if (evt.keyCode === constants.KEYCODE_ESC) {
+    action();
+  }
+};
+
+const isEnterEvent = (evt, action, array) => {
+  if (evt.keyCode === constants.KEYCODE_ENTER) {
+    action(array);
+  }
+};
+
+export {addClassName, removeClassName, removeChilds, createDOMElement, getTemplateClone, isEscEvent, isEnterEvent};
