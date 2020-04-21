@@ -1,21 +1,21 @@
-import * as  constants from './constants.js';
+import * as constants from './constants.js';
 import * as utils from './utils.js';
 import * as form from './form.js';
 import * as filters from './filters.js';
 import * as scale from './scale.js';
 
-const galleryOverlay = document.querySelector('body');
+const galleryOverlay = document.querySelector(`body`);
 
-const editingWindow = document.querySelector('.img-upload');
-const fileUploadButton = editingWindow.querySelector('.img-upload__input');
-const previewWindow = editingWindow.querySelector('.img-upload__overlay');
-const effectsLevel = editingWindow.querySelector('.effect-level');
-const closePreviewWindowBtn = editingWindow.querySelector('.img-upload__cancel');
-const submitPhotoBtn = editingWindow.querySelector('.img-upload__submit');
-const editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-const pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
-const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
-const editingWindowComment = editingWindow.querySelector('.text__description');
+const editingWindow = document.querySelector(`.img-upload`);
+const fileUploadButton = editingWindow.querySelector(`.img-upload__input`);
+const previewWindow = editingWindow.querySelector(`.img-upload__overlay`);
+const effectsLevel = editingWindow.querySelector(`.effect-level`);
+const closePreviewWindowBtn = editingWindow.querySelector(`.img-upload__cancel`);
+const submitPhotoBtn = editingWindow.querySelector(`.img-upload__submit`);
+const editingWindowFilters = editingWindow.querySelector(`.img-upload__preview img`);
+const pictureZoomingValue = editingWindow.querySelector(`.scale__control--value`);
+const editingWindowHashtags = editingWindow.querySelector(`.text__hashtags`);
+const editingWindowComment = editingWindow.querySelector(`.text__description`);
 
 const resetSettings = () => {
   editingWindowComment.value = ``;
@@ -59,7 +59,7 @@ const closeEditingWindow = ()=> {
   document.removeEventListener(`keydown`, onEditingWindowKeyDown);
 };
 
-const onEditingWindowKeyDown = ()=> {
+const onEditingWindowKeyDown = (evt)=> {
   if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
     if (evt.keyCode === constants.KEYCODE_ESC) {
       closeEditingWindow();
@@ -67,6 +67,6 @@ const onEditingWindowKeyDown = ()=> {
   }
 };
 
-const uploadPhoto = () => fileUploadButton.addEventListener('change', openEditingWindow);
+const uploadPhoto = () => fileUploadButton.addEventListener(`change`, openEditingWindow);
 
-export default uploadPhoto
+export default uploadPhoto;

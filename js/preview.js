@@ -1,13 +1,13 @@
-import * as  constants from './constants.js';
+import * as constants from './constants.js';
 import * as utils from './utils.js';
 
-const galleryOverlay = document.querySelector('body');
-const pictures = document.querySelector('.pictures');
-const bigPicture = document.querySelector('.big-picture');
-const usersMessages = bigPicture.querySelector('.social__comments');
-const messagesCounter = bigPicture.querySelector('.social__comment-count');
-const messagesLoader = bigPicture.querySelector('.comments-loader');
-const closeBigPictureBtn = bigPicture.querySelector('.big-picture__cancel');
+const galleryOverlay = document.querySelector(`body`);
+const pictures = document.querySelector(`.pictures`);
+const bigPicture = document.querySelector(`.big-picture`);
+const usersMessages = bigPicture.querySelector(`.social__comments`);
+const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
+const messagesLoader = bigPicture.querySelector(`.comments-loader`);
+const closeBigPictureBtn = bigPicture.querySelector(`.big-picture__cancel`);
 
 const createMessage = (comment) => {
   const userMessage = utils.createDOMElement(`li`, `social__comment`);
@@ -92,7 +92,7 @@ const showPhoto = (arrayPictures) => {
         openBigPicture(arrayPictures, pictureNumber);
       }
     }
-  });;
+  });
 };
 
 export default showPhoto;

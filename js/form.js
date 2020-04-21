@@ -1,7 +1,7 @@
-import * as  constants from './constants.js';
+import * as constants from './constants.js';
 
-const editingWindow = document.querySelector('.img-upload');
-const editingWindowHashtags = editingWindow.querySelector('.text__hashtags');
+const editingWindow = document.querySelector(`.img-upload`);
+const editingWindowHashtags = editingWindow.querySelector(`.text__hashtags`);
 
 const checkHashtagsList = (evt) => {
   const hashtags = getArrayHashtags(evt);
@@ -72,4 +72,4 @@ const initValidation = () => editingWindowHashtags.addEventListener(`input`, val
 
 const breakValidation = () => editingWindowHashtags.removeEventListener(`input`, validateForm);
 
-export { initValidation, breakValidation }
+export {initValidation, breakValidation};

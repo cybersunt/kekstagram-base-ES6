@@ -1,21 +1,23 @@
-import * as  constants from './constants.js';
+import * as constants from './constants.js';
 
 const addClassName = (element, className) => element.classList.add(className);
 
 const removeClassName = (element, className) => element.classList.remove(className);
 
-const removeChilds = (element) => element.innerHTML = '';
+const removeChilds = (element) => {
+  element.innerHTML = ``;
+};
 
 const createDOMElement = (tagName, className) => {
-  var element = document.createElement(tagName);
+  const element = document.createElement(tagName);
   element.classList.add(className);
   return element;
 };
 
 const getTemplateClone = (template, innerSelector) => {
-  var templateElement = document.querySelector(template);
-  var elementToClone = templateElement.querySelector(innerSelector);
-  if ('content' in templateElement) {
+  const templateElement = document.querySelector(template);
+  const elementToClone = templateElement.querySelector(innerSelector);
+  if (`content` in templateElement) {
     elementToClone = templateElement.content.querySelector(innerSelector);
   }
   return elementToClone;
@@ -33,4 +35,4 @@ const isEnterEvent = (evt, action, array) => {
   }
 };
 
-export { addClassName, removeClassName, removeChilds, createDOMElement, getTemplateClone, isEscEvent, isEnterEvent }
+export {addClassName, removeClassName, removeChilds, createDOMElement, getTemplateClone, isEscEvent, isEnterEvent};

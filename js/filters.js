@@ -1,41 +1,41 @@
-import * as  constants from './constants.js';
+import * as constants from './constants.js';
 import * as utils from './utils.js';
 
-const  editingWindow = document.querySelector('.img-upload');
-const  editingWindowFilters = editingWindow.querySelector('.img-upload__preview img');
-const  pictureZoomingValue = editingWindow.querySelector('.scale__control--value');
-const  filters = editingWindow.querySelector('.effects');
-const  toggleSlider = editingWindow.querySelector('.effect-level__pin');
-const  effectsLevel = editingWindow.querySelector('.effect-level');
-// const  sliderBar = editingWindow.querySelector('.effect-level__line');
-// const  sliderBarFill = editingWindow.querySelector('.effect-level__depth');
+const editingWindow = document.querySelector(`.img-upload`);
+const editingWindowFilters = editingWindow.querySelector(`.img-upload__preview img`);
+const pictureZoomingValue = editingWindow.querySelector(`.scale__control--value`);
+const filters = editingWindow.querySelector(`.effects`);
+const toggleSlider = editingWindow.querySelector(`.effect-level__pin`);
+const effectsLevel = editingWindow.querySelector(`.effect-level`);
+// const sliderBar = editingWindow.querySelector(`.effect-level__line`);
+// const sliderBarFill = editingWindow.querySelector(`.effect-level__depth`);
 
-// let  currentFilterValue = 1;
-let  currentFilter = 'none';
+// let currentFilterValue = 1;
+let currentFilter = `none`;
 
-const  settingsEffects = {
+const settingsEffects = {
   chrome: {
-    NAME: 'chrome',
+    NAME: `chrome`,
     MIN: 0,
     MAX: 1
   },
   sepia: {
-    NAME: 'sepia',
+    NAME: `sepia`,
     MIN: 0,
     MAX: 1
   },
   marvin: {
-    NAME: 'marvin',
+    NAME: `marvin`,
     MIN: 0,
     MAX: 100
   },
   phobos: {
-    NAME: 'phobos',
+    NAME: `phobos`,
     MIN: 0,
     MAX: 3
   },
   heat: {
-    NAME: 'heat',
+    NAME: `heat`,
     MIN: 1,
     MAX: 3
   }
@@ -53,7 +53,7 @@ const setFilter = (evt) => {
 const getCurrentFilterValue = (filter, filterValue) => (filter.MAX - filter.MIN) * filterValue;
 
 const setDefaultSettings = () => {
-  pictureZoomingValue.value = SCALE_PERCENTS + `%`;
+  pictureZoomingValue.value = constants.SCALE_PERCENTS + `%`;
   editingWindowFilters.style = null;
   utils.addClassName(effectsLevel, `hidden`);
 };
@@ -92,4 +92,4 @@ const cancelEffect = () => {
   toggleSlider.removeEventListener(`mouseup`, setFilterSaturation);
 };
 
-export { applyEffect, cancelEffect}
+export {applyEffect, cancelEffect};

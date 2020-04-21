@@ -1,28 +1,28 @@
 const DataPictures = {
-    COUNT_PHOTOS: 25,
+  COUNT_PHOTOS: 25,
 
-    MIN_LIKES: 15,
-    MAX_LIKES: 200,
+  MIN_LIKES: 15,
+  MAX_LIKES: 200,
 
-    MIN_AVATAR_NUM: 1,
-    MAX_AVATAR_NUM: 6,
+  MIN_AVATAR_NUM: 1,
+  MAX_AVATAR_NUM: 6,
 
-    MESSAGES: [
-      `Всё отлично!`,
-      `В целом всё неплохо. Но не всё.`,
-      `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
-      `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
-      `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
-      `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`
-    ],
+  MESSAGES: [
+    `Всё отлично!`,
+    `В целом всё неплохо. Но не всё.`,
+    `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
+    `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
+    `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
+    `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`
+  ],
 
-    USER_NAMES: [`Артем`, `Игорь`, `Марина`, `Динара`, `Вадим`, `Сергей`]
-  };
+  USER_NAMES: [`Артем`, `Игорь`, `Марина`, `Динара`, `Вадим`, `Сергей`]
+};
 
 const generateSrcImage = () => {
-    const numberImage = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM);
-    return `img/avatar-${numberImage}.svg`;
-  };
+  const numberImage = getRandomNumber(DataPictures.MIN_AVATAR_NUM, DataPictures.MAX_AVATAR_NUM);
+  return `img/avatar-${numberImage}.svg`;
+};
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -59,6 +59,6 @@ const generateMocksData = () => {
     });
   }
   return notes;
-}
+};
 
 export default generateMocksData;
