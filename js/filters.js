@@ -48,11 +48,14 @@ const setFilter = (evt) => {
     toggleSlider.style.left = constants.DEFAULT_EFFECT_LEVEL;
     sliderBarFill.style.width = constants.DEFAULT_EFFECT_LEVEL;
     utils.removeClassName(effectsLevel, `hidden`);
-    setFilterSaturation(constants.DEFAULT_FILTER_VALUE);
+    checkUseFilter(currentFilter);
   }
 };
 
-const getCurrentFilterValue = (filter, filterValue) => filter.MIN + (filter.MAX - filter.MIN) * filterValue;
+const getCurrentFilterValue = (filter) => {
+  console.log('getCurrentFilterValue ' + currentFilterValue)
+  return filter.MIN + (filter.MAX - filter.MIN) * currentFilterValue;
+}
 
 const setDefaultSettings = () => {
   pictureZoomingValue.value = constants.SCALE_PERCENTS + `%`;
@@ -60,28 +63,16 @@ const setDefaultSettings = () => {
   utils.addClassName(effectsLevel, `hidden`);
 };
 
-const setFilterSaturation = (filterValue) => checkUseFilter(currentFilter, filterValue);
+const checkUseFilter = (filterName) => {
+  const switchFilters = {
+    'chrome': `grayscale(${getCurrentFilterValue(settingsEffects.chrome)})`,
+    'sepia': `sepia(${getCurrentFilterValue(settingsEffects.sepia)})`,
+    'marvin': `invert(${getCurrentFilterValue(settingsEffects.marvin)}%)`,
+    'phobos': `blur(${getCurrentFilterValue(settingsEffects.phobos)}px)`,
+    'heat': `brightness(${getCurrentFilterValue(settingsEffects.heat)})`
+  };
 
-const checkUseFilter = (filterName, filterValue) => {
-  switch (filterName) {
-    case settingsEffects.chrome.NAME:
-      editingWindowFilters.style.filter = `grayscale(` + getCurrentFilterValue(settingsEffects.chrome, filterValue) + `)`;
-      break;
-    case settingsEffects.sepia.NAME:
-      editingWindowFilters.style.filter = `sepia(` + getCurrentFilterValue(settingsEffects.sepia, filterValue) + `)`;
-      break;
-    case settingsEffects.marvin.NAME:
-      editingWindowFilters.style.filter = `invert(` + getCurrentFilterValue(settingsEffects.marvin, filterValue) + `%)`;
-      break;
-    case settingsEffects.phobos.NAME:
-      editingWindowFilters.style.filter = `blur(` + getCurrentFilterValue(settingsEffects.phobos, filterValue) + `px)`;
-      break;
-    case settingsEffects.heat.NAME:
-      editingWindowFilters.style.filter = `brightness(` + getCurrentFilterValue(settingsEffects.heat, filterValue) + `)`;
-      break;
-    default:
-      setDefaultSettings();
-  }
+  filterName !== constants.DEFAULT_FILTER_NAME ? editingWindowFilters.style.filter = switchFilters[filterName] : setDefaultSettings();
 };
 
 const onMouseDown = (evt) => {
@@ -106,7 +97,8 @@ const onMouseDown = (evt) => {
 
     if (toggleSliderCoord < LimitMovementX.min) {
       toggleSliderCoord = LimitMovementX.min;
-    } else if (toggleSliderCoord > LimitMovementX.max) {
+    }
+    if (toggleSliderCoord > LimitMovementX.max) {
       toggleSliderCoord = LimitMovementX.max;
     }
 
@@ -114,7 +106,7 @@ const onMouseDown = (evt) => {
     sliderBarFill.style.width = toggleSliderCoord + `px`;
 
     currentFilterValue = toggleSliderCoord / (LimitMovementX.max - LimitMovementX.min);
-    setFilterSaturation(currentFilterValue);
+    checkUseFilter(currentFilter);
   };
 
   const onMouseUp = (upEvt) => {
