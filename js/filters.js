@@ -52,10 +52,7 @@ const setFilter = (evt) => {
   }
 };
 
-const getCurrentFilterValue = (filter) => {
-  console.log('getCurrentFilterValue ' + currentFilterValue)
-  return filter.MIN + (filter.MAX - filter.MIN) * currentFilterValue;
-}
+const getCurrentFilterValue = (filter) => filter.MIN + (filter.MAX - filter.MIN) * currentFilterValue;
 
 const setDefaultSettings = () => {
   pictureZoomingValue.value = constants.SCALE_PERCENTS + `%`;
