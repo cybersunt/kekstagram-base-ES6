@@ -6,12 +6,12 @@ import * as editor from './editor.js';
 
 const onError = (message) => messages.showError(message);
 
-const onSuccess = (serverData) =>  {
+const onSuccess = (serverData) => {
   data.savePhotos(serverData);
   data.saveOriginalPhotos(serverData);
-  const photos = getOriginalPhotos();
+  const photos = data.getOriginalPhotos();
   gallery.renderPhotos(photos);
   editor.uploadPhoto();
 };
 
-backend.load('https://javascript.pages.academy/kekstagram/data', 'GET', onSuccess, onError);
+backend.load(`https://javascript.pages.academy/kekstagram/data`, `GET`, onSuccess, onError);
