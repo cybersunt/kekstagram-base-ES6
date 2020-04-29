@@ -1,19 +1,17 @@
-import {getOriginalPhotos, saveOriginalPhotos, getCurrentPhotos, savePhotos} from './data.js';
-import {load} from './backend.js';
-import renderPhotos from './gallery.js';
-import uploadPhoto from './editor.js';
+import * as data from './data.js';
+import * as backend from './backend.js';
+import * as messages from './messages.js';
+import * as gallery from './gallery.js';
+import * as editor from './editor.js';
 
-function onError(message) {
-  console.log(message);
-  // window.messages.showError(message);
-}
+const onError = (message) => messages.showError(message);
 
-function onSuccess(data) {
-  savePhotos(data);
-  saveOriginalPhotos(data);
+const onSuccess = (serverData) =>  {
+  data.savePhotos(serverData);
+  data.saveOriginalPhotos(serverData);
   const photos = getOriginalPhotos();
-  renderPhotos(photos);
-  uploadPhoto();
-}
+  gallery.renderPhotos(photos);
+  editor.uploadPhoto();
+};
 
-load('https://javascript.pages.academy/kekstagram/dat', 'GET', onSuccess, onError);
+backend.load('https://javascript.pages.academy/kekstagram/data', 'GET', onSuccess, onError);
