@@ -30,7 +30,7 @@ const onSuccessMessageCloseKeyDown = (evt) => {
   utils.isEscEvent(evt, removeSuccessMessage);
 };
 
-const removeErrorMessage = ()=> {
+const removeErrorMessage = () => {
   const message = document.querySelector(`.error`);
   const messageBtnClose = message.querySelector(`.error__button`);
   message.remove();
@@ -40,9 +40,10 @@ const removeErrorMessage = ()=> {
   document.removeEventListener(`keydown`, onErrorMessageCloseKeyDown);
 };
 
-const removeSuccessMessage = ()=> {
+const removeSuccessMessage = () => {
   const message = document.querySelector(`.success`);
   const messageBtnClose = message.querySelector(`.success__button`);
+  message.remove();
 
   messageBtnClose.removeEventListener(`click`, onErrorMessageBtnCloseClick);
   document.removeEventListener(`click`, onSuccessMessageCloseClick);

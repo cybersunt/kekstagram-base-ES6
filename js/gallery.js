@@ -1,4 +1,4 @@
-import showPhoto from './preview.js';
+import * as preview from './preview.js';
 
 const renderPicture = (image, pictureIndex) =>{
   const picturesTemplate = document.querySelector(`#picture`).content;
@@ -18,9 +18,9 @@ const renderPhotos = (arrayPictures) => {
 
   arrayPictures.forEach((el, index) => fragment.appendChild(renderPicture(el, index)));
 
-  showPhoto(arrayPictures);
+  preview.showPhoto(arrayPictures);
 
   picturesList.appendChild(fragment);
 };
 
-export default renderPhotos;
+export {renderPhotos};
