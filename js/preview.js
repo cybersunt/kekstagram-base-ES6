@@ -95,4 +95,4 @@ const showPhoto = (arrayPictures) => {
   });
 };
 
-export default showPhoto;
+export {showPhoto};
