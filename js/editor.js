@@ -1,3 +1,5 @@
+import * as backend from './backend.js';
+import * as messages from './messages.js';
 import * as constants from './constants.js';
 import * as utils from './utils.js';
 import * as form from './form.js';
@@ -11,11 +13,18 @@ const fileUploadButton = editingWindow.querySelector(`.img-upload__input`);
 const previewWindow = editingWindow.querySelector(`.img-upload__overlay`);
 const effectsLevel = editingWindow.querySelector(`.effect-level`);
 const closePreviewWindowBtn = editingWindow.querySelector(`.img-upload__cancel`);
+const editingForm = editingWindow.querySelector(`.img-upload__form`);
 const submitPhotoBtn = editingWindow.querySelector(`.img-upload__submit`);
 const editingWindowFilters = editingWindow.querySelector(`.img-upload__preview img`);
 const pictureZoomingValue = editingWindow.querySelector(`.scale__control--value`);
 const editingWindowHashtags = editingWindow.querySelector(`.text__hashtags`);
 const editingWindowComment = editingWindow.querySelector(`.text__description`);
+
+const onEditingWindowKeyDown = (evt)=> {
+  if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
+    utils.isEscEvent(evt, closeEditingWindow);
+  }
+};
 
 const resetSettings = () => {
   editingWindowComment.value = ``;
@@ -39,6 +48,7 @@ const openEditingWindow = ()=> {
   scale.addZoomPhoto();
 
   closePreviewWindowBtn.addEventListener(`click`, closeEditingWindow);
+  editingForm.addEventListener(`submit`, sendData);
   submitPhotoBtn.addEventListener(`submit`, closeEditingWindow);
   document.addEventListener(`keydown`, onEditingWindowKeyDown);
 };
@@ -55,18 +65,26 @@ const closeEditingWindow = ()=> {
   scale.removeZoomPhoto();
 
   closePreviewWindowBtn.removeEventListener(`click`, closeEditingWindow);
+  editingForm.removeEventListener(`submit`, sendData);
   submitPhotoBtn.removeEventListener(`submit`, closeEditingWindow);
   document.removeEventListener(`keydown`, onEditingWindowKeyDown);
 };
 
-const onEditingWindowKeyDown = (evt)=> {
-  if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
-    if (evt.keyCode === constants.KEYCODE_ESC) {
-      closeEditingWindow();
-    }
-  }
+const onSuccess = () => {
+  closeEditingWindow();
+  messages.showSuccess();
+};
+
+const onError = (message) => {
+  closeEditingWindow();
+  messages.showError(message);
+};
+
+const sendData = (evt) => {
+  evt.preventDefault();
+  backend.upload(new FormData(editingForm), `https://javascript.pages.academy/kekstagram/`, `POST`, onSuccess, onError);
 };
 
 const uploadPhoto = () => fileUploadButton.addEventListener(`change`, openEditingWindow);
 
-export default uploadPhoto;
+export {uploadPhoto};

@@ -16,7 +16,7 @@ const createDOMElement = (tagName, className) => {
 
 const getTemplateClone = (template, innerSelector) => {
   const templateElement = document.querySelector(template);
-  const elementToClone = templateElement.querySelector(innerSelector);
+  let elementToClone = templateElement.querySelector(innerSelector);
   if (`content` in templateElement) {
     elementToClone = templateElement.content.querySelector(innerSelector);
   }
