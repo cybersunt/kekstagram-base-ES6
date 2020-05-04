@@ -61,9 +61,7 @@ const closeEditingWindow = ()=> {
 
 const onEditingWindowKeyDown = (evt)=> {
   if (document.activeElement !== editingWindowHashtags && document.activeElement !== editingWindowComment) {
-    if (evt.keyCode === constants.KEYCODE_ESC) {
-      closeEditingWindow();
-    }
+    utils.isEscEvent(evt, closeEditingWindow);
   }
 };
 

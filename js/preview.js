@@ -64,11 +64,7 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
 
 const onPictureCloseBtnClick = ()=> closeBigPicture();
 
-const onPictureCloseKeyDown = (evt) => {
-  if (evt.keyCode === constants.KEYCODE_ESC) {
-    closeBigPicture();
-  }
-};
+const onPictureCloseKeyDown = (evt) => utils.isEscEvent(evt, closeBigPicture);
 
 const closeBigPicture = ()=> {
   utils.removeClassName(galleryOverlay, `modal-open`);
@@ -88,9 +84,7 @@ const showPhoto = (arrayPictures) => {
   pictures.addEventListener(`keydown`, (evt) => {
     if (evt.target.classList.contains(`picture`)) {
       const pictureNumber = evt.target.querySelector(`img`).dataset.id;
-      if (evt.keyCode === constants.KEYCODE_ENTER) {
-        openBigPicture(arrayPictures, pictureNumber);
-      }
+      utils.isEnterEvent(evt, openBigPicture, arrayPictures, pictureNumber);
     }
   });
 };
