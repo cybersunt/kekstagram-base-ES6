@@ -2,6 +2,7 @@ import * as backend from './backend.js';
 import * as messages from './messages.js';
 import * as constants from './constants.js';
 import * as utils from './utils.js';
+import * as picture from './picture.js';
 import * as form from './form.js';
 import * as filters from './filters.js';
 import * as scale from './scale.js';
@@ -41,6 +42,8 @@ const openEditingWindow = ()=> {
   utils.addClassName(galleryOverlay, `modal-open`);
   utils.removeClassName(previewWindow, `hidden`);
   utils.addClassName(effectsLevel, `hidden`);
+
+  picture.uploadFile();
 
   // event handlers
   form.initValidation();

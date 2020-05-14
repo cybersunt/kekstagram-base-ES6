@@ -47,12 +47,12 @@ const showMessageList = (pictureIndex) => {
   const messages = photos[currentPictureIndex].comments;
 
   commentsCounter = constants.MIN_COMMENTS_COUNT;
-  messagesCounter.innerHTML = '';
+  messagesCounter.innerHTML = ``;
 
   checkQuantityComments(messages, commentsCounter);
 
   if (messages.length > commentsCounter) {
-    messagesLoader.addEventListener('click', countMessages);
+    messagesLoader.addEventListener(`click`, countMessages);
   }
 };
 
@@ -65,31 +65,30 @@ const countMessages = ()=> {
   checkQuantityComments(messages, commentsCounter);
 
   if (messages.length <= commentsCounter) {
-    messagesLoader.removeEventListener('click', countMessages);
+    messagesLoader.removeEventListener(`click`, countMessages);
   }
 };
 
 const checkQuantityComments = (messages, pictureCommentsCounter) => {
   if (messages.length <= pictureCommentsCounter) {
-    pictureMessagesCounter.textContent = messages.length + ' из ' + messages.length + ' комментариев';
-    utils.addClassName(messagesLoader, 'hidden');
+    pictureMessagesCounter.textContent = `${messages.length} из ${messages.length} комментариев`;
+    utils.addClassName(messagesLoader, `hidden`);
     messagesCounter.appendChild(pictureMessagesCounter);
     usersMessages.appendChild(renderMessagesList(messages));
   }
   if (messages.length > pictureCommentsCounter) {
-    pictureMessagesCounter.textContent = pictureCommentsCounter + ' из ' + messages.length + ' комментариев';
-    utils.removeClassName(messagesLoader, 'hidden');
+    pictureMessagesCounter.textContent = `${pictureCommentsCounter} из ${messages.length} комментариев`;
+    utils.removeClassName(messagesLoader, `hidden`);
     const messagesCropped = messages.slice(0, pictureCommentsCounter);
     messagesCounter.appendChild(pictureMessagesCounter);
     usersMessages.appendChild(renderMessagesList(messagesCropped));
   }
-}
+};
 
 const renderPreviewPicture = (pictureIndex) => {
   const photos = data.getCurrentPhotos();
   const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
-  const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
   const pictureDescription = bigPicture.querySelector(`.social__caption`);
 
   pictureUrl.src = photos[pictureIndex].url;
