@@ -41,7 +41,7 @@ const openEditingWindow = ()=> {
   // dom manipulation
   utils.addClassName(galleryOverlay, `modal-open`);
   utils.removeClassName(previewWindow, `hidden`);
-  utils.addClassName(effectsLevel, `hidden`)
+  utils.addClassName(effectsLevel, `hidden`);
 
   picture.uploadFile();
 
