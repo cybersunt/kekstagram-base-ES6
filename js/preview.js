@@ -1,5 +1,6 @@
 import * as constants from './constants.js';
 import * as utils from './utils.js';
+import * as data from './data.js';
 
 const galleryOverlay = document.querySelector(`body`);
 const pictures = document.querySelector(`.pictures`);
@@ -8,6 +9,8 @@ const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
 const closeBigPictureBtn = bigPicture.querySelector(`.big-picture__cancel`);
+
+let currentPictureIndex;
 
 const createMessage = (comment) => {
   const userMessage = utils.createDOMElement(`li`, `social__comment`);
@@ -33,24 +36,32 @@ const renderMessagesList = (array) => {
   array.forEach(function (el) {
     fragment.appendChild(createMessage(el));
   });
-  usersMessages.appendChild(fragment);
+  return fragment;
 };
 
-const renderPreviewPicture = (arrayPictures, pictureIndex) => {
+const showMessageList = (pictureIndex) => {
+  currentPictureIndex = pictureIndex;
+  const photos = data.getCurrentPhotos();
+  const messages = photos[currentPictureIndex].comments;
+  usersMessages.appendChild(renderMessagesList(messages));
+};
+
+const renderPreviewPicture = (pictureIndex) => {
+  var photos = data.getCurrentPhotos();
   const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
   const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
   const pictureDescription = bigPicture.querySelector(`.social__caption`);
 
-  pictureUrl.src = arrayPictures[pictureIndex].url;
-  pictureLikes.textContent = arrayPictures[pictureIndex].likes;
-  pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
-  pictureDescription.textContent = arrayPictures[pictureIndex].description;
+  pictureUrl.src = photos[pictureIndex].url;
+  pictureLikes.textContent = photos[pictureIndex].likes;
+  pictureMessagesCounter.textContent = photos[pictureIndex].comments.length;
+  pictureDescription.textContent = photos[pictureIndex].description;
 };
 
-const openBigPicture = (arrayPictures, pictureIndex) => {
-  renderPreviewPicture(arrayPictures, pictureIndex);
-  renderMessagesList(arrayPictures[pictureIndex].comments);
+const openBigPicture = (pictureIndex) => {
+  renderPreviewPicture(pictureIndex);
+  showMessageList(pictureIndex);
 
   utils.addClassName(messagesCounter, `hidden`);
   utils.addClassName(messagesLoader, `hidden`);
@@ -73,18 +84,18 @@ const closeBigPicture = ()=> {
   document.removeEventListener(`keydown`, onPictureCloseKeyDown);
 };
 
-const showPhoto = (arrayPictures) => {
+const showPhoto = () => {
   pictures.addEventListener(`click`, (evt) => {
     if (evt.target.classList.contains(`picture__img`)) {
       const pictureNumber = evt.target.dataset.id;
-      openBigPicture(arrayPictures, pictureNumber);
+      openBigPicture(pictureNumber);
     }
   });
 
   pictures.addEventListener(`keydown`, (evt) => {
     if (evt.target.classList.contains(`picture`)) {
       const pictureNumber = evt.target.querySelector(`img`).dataset.id;
-      utils.isEnterEvent(evt, openBigPicture, arrayPictures, pictureNumber);
+      utils.isEnterEvent(evt, openBigPicture, pictureNumber);
     }
   });
 };
