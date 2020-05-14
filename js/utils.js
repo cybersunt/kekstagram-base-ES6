@@ -29,9 +29,9 @@ const isEscEvent = (evt, action) => {
   }
 };
 
-const isEnterEvent = (evt, action, array) => {
+const isEnterEvent = (evt, action, index) => {
   if (evt.keyCode === constants.KEYCODE_ENTER) {
-    action(array);
+    action(index);
   }
 };
 

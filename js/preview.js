@@ -1,13 +1,18 @@
 import * as constants from './constants.js';
 import * as utils from './utils.js';
+import * as data from './data.js';
 
 const galleryOverlay = document.querySelector(`body`);
 const pictures = document.querySelector(`.pictures`);
 const bigPicture = document.querySelector(`.big-picture`);
 const usersMessages = bigPicture.querySelector(`.social__comments`);
 const messagesCounter = bigPicture.querySelector(`.social__comment-count`);
+const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
 const messagesLoader = bigPicture.querySelector(`.comments-loader`);
 const closeBigPictureBtn = bigPicture.querySelector(`.big-picture__cancel`);
+
+let currentPictureIndex;
+let commentsCounter;
 
 const createMessage = (comment) => {
   const userMessage = utils.createDOMElement(`li`, `social__comment`);
@@ -33,27 +38,69 @@ const renderMessagesList = (array) => {
   array.forEach(function (el) {
     fragment.appendChild(createMessage(el));
   });
-  usersMessages.appendChild(fragment);
+  return fragment;
 };
 
-const renderPreviewPicture = (arrayPictures, pictureIndex) => {
+const showMessageList = (pictureIndex) => {
+  currentPictureIndex = pictureIndex;
+  const photos = data.getCurrentPhotos();
+  const messages = photos[currentPictureIndex].comments;
+
+  commentsCounter = constants.MIN_COMMENTS_COUNT;
+  messagesCounter.innerHTML = '';
+
+  checkQuantityComments(messages, commentsCounter);
+
+  if (messages.length > commentsCounter) {
+    messagesLoader.addEventListener('click', countMessages);
+  }
+};
+
+const countMessages = ()=> {
+  commentsCounter = commentsCounter + constants.STEP_COMMENTS_COUNT;
+
+  const photos = data.getCurrentPhotos();
+  const messages = photos[currentPictureIndex].comments;
+
+  checkQuantityComments(messages, commentsCounter);
+
+  if (messages.length <= commentsCounter) {
+    messagesLoader.removeEventListener('click', countMessages);
+  }
+};
+
+const checkQuantityComments = (messages, pictureCommentsCounter) => {
+  if (messages.length <= pictureCommentsCounter) {
+    pictureMessagesCounter.textContent = messages.length + ' из ' + messages.length + ' комментариев';
+    utils.addClassName(messagesLoader, 'hidden');
+    messagesCounter.appendChild(pictureMessagesCounter);
+    usersMessages.appendChild(renderMessagesList(messages));
+  }
+  if (messages.length > pictureCommentsCounter) {
+    pictureMessagesCounter.textContent = pictureCommentsCounter + ' из ' + messages.length + ' комментариев';
+    utils.removeClassName(messagesLoader, 'hidden');
+    const messagesCropped = messages.slice(0, pictureCommentsCounter);
+    messagesCounter.appendChild(pictureMessagesCounter);
+    usersMessages.appendChild(renderMessagesList(messagesCropped));
+  }
+}
+
+const renderPreviewPicture = (pictureIndex) => {
+  const photos = data.getCurrentPhotos();
   const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
   const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
   const pictureDescription = bigPicture.querySelector(`.social__caption`);
 
-  pictureUrl.src = arrayPictures[pictureIndex].url;
-  pictureLikes.textContent = arrayPictures[pictureIndex].likes;
-  pictureMessagesCounter.textContent = arrayPictures[pictureIndex].comments.length;
-  pictureDescription.textContent = arrayPictures[pictureIndex].description;
+  pictureUrl.src = photos[pictureIndex].url;
+  pictureLikes.textContent = photos[pictureIndex].likes;
+  pictureMessagesCounter.textContent = photos[pictureIndex].comments.length;
+  pictureDescription.textContent = photos[pictureIndex].description;
 };
 
-const openBigPicture = (arrayPictures, pictureIndex) => {
-  renderPreviewPicture(arrayPictures, pictureIndex);
-  renderMessagesList(arrayPictures[pictureIndex].comments);
-
-  utils.addClassName(messagesCounter, `hidden`);
-  utils.addClassName(messagesLoader, `hidden`);
+const openBigPicture = (pictureIndex) => {
+  renderPreviewPicture(pictureIndex);
+  showMessageList(pictureIndex);
 
   utils.addClassName(galleryOverlay, `modal-open`);
   utils.removeClassName(bigPicture, `hidden`);
@@ -62,13 +109,9 @@ const openBigPicture = (arrayPictures, pictureIndex) => {
   document.addEventListener(`keydown`, onPictureCloseKeyDown);
 };
 
-const onPictureCloseBtnClick = ()=> closeBigPicture();
+const onPictureCloseBtnClick = () => closeBigPicture();
 
-const onPictureCloseKeyDown = (evt) => {
-  if (evt.keyCode === constants.KEYCODE_ESC) {
-    closeBigPicture();
-  }
-};
+const onPictureCloseKeyDown = (evt) => utils.isEscEvent(evt, closeBigPicture);
 
 const closeBigPicture = ()=> {
   utils.removeClassName(galleryOverlay, `modal-open`);
@@ -77,20 +120,18 @@ const closeBigPicture = ()=> {
   document.removeEventListener(`keydown`, onPictureCloseKeyDown);
 };
 
-const showPhoto = (arrayPictures) => {
+const showPhoto = () => {
   pictures.addEventListener(`click`, (evt) => {
     if (evt.target.classList.contains(`picture__img`)) {
       const pictureNumber = evt.target.dataset.id;
-      openBigPicture(arrayPictures, pictureNumber);
+      openBigPicture(pictureNumber);
     }
   });
 
   pictures.addEventListener(`keydown`, (evt) => {
     if (evt.target.classList.contains(`picture`)) {
       const pictureNumber = evt.target.querySelector(`img`).dataset.id;
-      if (evt.keyCode === constants.KEYCODE_ENTER) {
-        openBigPicture(arrayPictures, pictureNumber);
-      }
+      utils.isEnterEvent(evt, openBigPicture, pictureNumber);
     }
   });
 };

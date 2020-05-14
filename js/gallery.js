@@ -1,5 +1,7 @@
 import * as preview from './preview.js';
 
+const pictures = document.querySelector(`.pictures`);
+
 const renderPicture = (image, pictureIndex) =>{
   const picturesTemplate = document.querySelector(`#picture`).content;
   const picturesElement = picturesTemplate.cloneNode(true);
@@ -23,4 +25,12 @@ const renderPhotos = (arrayPictures) => {
   picturesList.appendChild(fragment);
 };
 
-export {renderPhotos};
+const removePhotos = () => {
+  const renderedPictures = pictures.querySelectorAll(`.picture`);
+
+  renderedPictures.forEach(function (element) {
+    element.remove();
+  });
+};
+
+export {renderPhotos, removePhotos};
