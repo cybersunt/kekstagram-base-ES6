@@ -41,7 +41,7 @@ const getSomeRandomPhotos = (photos) => {
   return someRandomPhotos;
 };
 
-const sortByDefault = (evt) =>  {
+const sortByDefault = (evt) => {
   changeActiveButton(evt);
 
   const photos = data.getOriginalPhotos();
@@ -75,7 +75,7 @@ const sortBySomeRandomPhotos = (evt) => {
   gallery.renderPhotos(randomPhotos);
 };
 
-const changeActiveButton = (evt) =>  {
+const changeActiveButton = (evt) => {
   sortButtons.forEach(function (element) {
     utils.removeClassName(element, `img-filters__button--active`);
   });

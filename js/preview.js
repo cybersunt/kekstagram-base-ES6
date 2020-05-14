@@ -47,7 +47,7 @@ const showMessageList = (pictureIndex) => {
 };
 
 const renderPreviewPicture = (pictureIndex) => {
-  var photos = data.getCurrentPhotos();
+  const photos = data.getCurrentPhotos();
   const pictureUrl = bigPicture.querySelector(`.big-picture__img img`);
   const pictureLikes = bigPicture.querySelector(`.likes-count`);
   const pictureMessagesCounter = bigPicture.querySelector(`.comments-count`);
