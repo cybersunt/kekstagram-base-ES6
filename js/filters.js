@@ -69,7 +69,7 @@ const checkUseFilter = (filterName) => {
     'heat': `brightness(${getCurrentFilterValue(settingsEffects.heat)})`
   };
 
-  if (filterName !== window.constants.DEFAULT_FILTER_NAME) {
+  if (filterName !== constants.DEFAULT_FILTER_NAME) {
     editingWindowFilters.style.filter = switchFilters[filterName];
   } else {
     setDefaultSettings();
